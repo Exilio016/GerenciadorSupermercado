@@ -18,11 +18,11 @@ mesmo tempo desenvolver uma aplicação útil.
 Desenvolver uma aplicação que seja capaz de gerenciar algumas das atividades
 comuns de um supermercado.
 ## Funcionalidades a serem desenvolvidas e objetivos:
-● Controle do caixa: Tela que possibilita a venda de produtos, sua remoção do
+* Controle do caixa: Tela que possibilita a venda de produtos, sua remoção do
 estoque e contabilização dos lucros
-● Controle de estoque: Tela capaz de visualizar, adicionar e remover produtos dos
+* Controle de estoque: Tela capaz de visualizar, adicionar e remover produtos dos
 estoque do supermercado
-● Controle de funcionários: Tela capaz de cadastrar, visualizar e remover funcionários
+* Controle de funcionários: Tela capaz de cadastrar, visualizar e remover funcionários
 do supermercado
-● Controle de clientes cadastrados: Tela capaz de visualizar, cadastrar e remover
+* Controle de clientes cadastrados: Tela capaz de visualizar, cadastrar e remover
 clientes do supermercado.

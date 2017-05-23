@@ -3,10 +3,10 @@
 ### Professor​: Dr. Márcio Delamaro
 ### Aluno​ PAE​: Misael, Stevão
 ## Grupo:
-Bruno Flávio Ferreira - 9791330
-Edson Yudi Toma - 9791305
-Rodrigo Noventa Júnior - 9791243
-Luca Porto - 9778943
+* Bruno Flávio Ferreira - 9791330
+* Edson Yudi Toma - 9791305
+* Rodrigo Noventa Júnior - 9791243
+* Luca Porto - 9778943
 ## Aplicação:
 Sistema de gerenciamento de Supermercado.
 ## Descrição:

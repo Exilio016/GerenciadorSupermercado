@@ -135,8 +135,4 @@ public class BancoDeDados {
         }
     }
 
-    public void atualizarCliente(String cpf, String campo, String valor){
-        /* TODO implementar update */
-    }
-
 }

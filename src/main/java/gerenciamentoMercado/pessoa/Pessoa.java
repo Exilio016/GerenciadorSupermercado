@@ -1,18 +1,20 @@
 package gerenciamentoMercado.pessoa;
 
-public class Pessoa{
+public abstract class Pessoa{
 	private Endereco end;
 	private String CPF;
 	private String RG;
 	private String telefone;
 	private String celular;
+	private String nome;
 	
-	public Pessoa(String estado, String cidade, String bairro, String rua, int numero, String complemento, String CEP, String CPF, String RG, String telefone, String celular) {
+	public Pessoa(String estado, String cidade, String bairro, String rua, int numero, String complemento, String CEP, String CPF, String RG, String telefone, String celular, String nome) {
 		this.end = new Endereco(estado, cidade, bairro, rua, numero, complemento, CEP);
 		this.CPF = CPF;
 		this.RG = RG;
 		this.telefone = telefone;
 		this.celular = celular;
+		this.nome = nome;
 	}
 
 	public Endereco getEnd() {
@@ -79,10 +81,13 @@ public class Pessoa{
 				soma += (11-i) * digitos[i];
 			verificador2 = 11 - (soma % 11) < 10 ? 11 - (soma % 11) : 0; //checagm do digito 0
 			
-			return digitos[9] == verificador1 && digitos[10] == verificador2 ? true : false; //checagem dos digitos
+        return (digitos[9] == verificador1 && digitos[10] == verificador2); //checagem dos digitos
 		}
 		return false; //erro
 	}
-	
+
+	public String getNome() {
+		return nome;
+	}
 }
 

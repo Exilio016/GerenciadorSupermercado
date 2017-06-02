@@ -1,50 +1,142 @@
 package gerenciamentoMercado.bancoDeDados;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import gerenciamentoMercado.pessoa.Cliente;
+
+import java.sql.*;
+import java.util.Vector;
 
 public class BancoDeDados {
     private Connection conn;
 
-    public BancoDeDados() throws SQLException{
+    public BancoDeDados() throws SQLException {
         String driver = "jdbc:derby:./Data/database;create=true"; //Conecta no banco local da maquina
         conn = DriverManager.getConnection(driver);
 
         PreparedStatement stmt;
 
         //Se o banco de dados estiver vazio, cria-se as tabelas do programa
-        try{
-            String sql = "CREATE TABLE Funcionario (nome VARCHAR(50), cpf VARCHAR(11) NOT NULL, rg VARCHAR(15), rua VARCHAR(50), cep INT(8), bairro VARCHAR(25), cidade VARCHAR(25), estado VARCHAR(25), numero INT, complemento VARCHAR(25), telefone INT(11), celular INT(12), salario FLOAT, cargo INT, primary key (cpf) )";
+        try {
+            String sql = "CREATE TABLE Funcionario (nome VARCHAR(50), cpf VARCHAR(11) NOT NULL, rg VARCHAR(15), rua VARCHAR(50), cep VARCHAR(8), bairro VARCHAR(25), cidade VARCHAR(25), estado VARCHAR(25), numero INT, complemento VARCHAR(25), telefone VARCHAR(11), celular VARCHAR(12), salario FLOAT, cargo INT, primary key (cpf) )";
 
             stmt = conn.prepareStatement(sql); //Se nao existir, cria a tabela Funcionarios
             stmt.execute();
             stmt.close();
-        } catch(SQLException se){
+        } catch (SQLException se) {
             //Se deu excecao, a tabela ja existe no banco
         }
 
-        try{
-            String sql = "CREATE TABLE Cliente (nome VARCHAR(32), cpf VARCHAR(11) NOT NULL, rg VARCHAR(15), rua VARCHAR(50), cep INT(8), bairro VARCHAR(25), cidade VARCHAR(25), estado VARCHAR(25), numero INT, complemento VARCHAR(25), telefone INT(11), celular INT(12), cartao INT(16), primary key (cpf) )";
+        try {
+            String sql = "CREATE TABLE Cliente (nome VARCHAR(32), cpf VARCHAR(11) NOT NULL, rg VARCHAR(15), rua VARCHAR(50), cep VARCHAR(8), bairro VARCHAR(25), cidade VARCHAR(25), estado VARCHAR(25), numero INT, complemento VARCHAR(25), telefone VARCHAR(11), celular VARCHAR(12), cartao VARCHAR(16), primary key (cpf) )";
 
             stmt = conn.prepareStatement(sql); //Se nao existir, cria a tabela clientes
             stmt.execute();
             stmt.close();
-        } catch(SQLException se){
+        } catch (SQLException se) {
             //Se deu excecao, a tabela ja existe no banco
         }
 
 
         //Se o banco de dados estiver vazio, cria-se as tabelas do programa
-        try{
-            String sql = "CREATE TABLE Produto (codigo BIGINT NOT NULL, descricao VARCHAR(255), valorunit FLOAT, quantidade INT, primary key (codigo) )";
+        try {
+            String sql = "CREATE TABLE Conta (cpf VARCHAR(11), usuario VARCHAR(25), senha VARCHAR(25), PRIMARY KEY (usuario))";
 
             stmt = conn.prepareStatement(sql);//Se nao existir, cria a tabela produtos
             stmt.execute();
             stmt.close();
-        } catch(SQLException se){
+
+            sql = "INSERT INTO Conta (usuario, senha) VALUES (admin, admin)";
+            stmt = conn.prepareStatement(sql);
+            stmt.execute();
+            stmt.close();
+
+        } catch (SQLException se) {
             //Se deu excecao, a tabela ja existe no banco
         }
     }
+
+    public Cliente procurarCliente(String cpf) {
+        Cliente ret = null;
+        String sql = "SELECT * FROM Cliente WHERE cpf=?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, cpf);
+
+            ResultSet res = stmt.executeQuery();
+            if(res.next()) {
+                String nome = res.getString(1);
+                String rg = res.getString(3);
+                String rua = res.getString(4);
+                String cep = res.getString(5);
+                String bairro = res.getString(6);
+                String cidade = res.getString(7);
+                String estado = res.getString(8);
+                int numero = res.getInt(9);
+                String complemento = res.getString(10);
+                String telefone = res.getString(11);
+                String celular = res.getString(12);
+                String cartao = res.getString(13);
+
+                ret = new Cliente(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, cartao, nome);
+            }
+
+            stmt.close();
+
+
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return ret;
+    }
+
+    public void adicionarCliente(Cliente cliente){
+        if(cliente != null){
+            String sql = "INSERT INTO Cliente (nome, cpf, rg, cep, estado, cidade, bairro, rua, numero, complemento, telefone, celular, cartao) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            PreparedStatement stmt = null;
+            try {
+                stmt = conn.prepareStatement(sql);
+
+                stmt.setString(1, cliente.getNome());
+                stmt.setString(2, cliente.getCPF());
+                stmt.setString(3, cliente.getRG());
+                stmt.setString(4, cliente.getEnd().getCEP());
+                stmt.setString(5, cliente.getEnd().getEstado());
+                stmt.setString(6, cliente.getEnd().getCidade());
+                stmt.setString(7, cliente.getEnd().getBairro());
+                stmt.setString(8, cliente.getEnd().getRua());
+                stmt.setInt   (9, cliente.getEnd().getNumero());
+                stmt.setString(10, cliente.getEnd().getComplemento());
+                stmt.setString(11, cliente.getTelefone());
+                stmt.setString(12, cliente.getCelular());
+                stmt.setString(13, cliente.getCartao());
+
+                stmt.execute();
+                stmt.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void removerCliente(String cpf){
+        String sql = "DELETE FROM Cliente WHERE cpf = ?";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,cpf);
+
+            stmt.execute();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void atualizarCliente(String cpf, String campo, String valor){
+        /* TODO implementar update */
+    }
+
 }

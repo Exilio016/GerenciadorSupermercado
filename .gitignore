@@ -1,5 +1,4 @@
-*
-!/src/*
-!pom.xml
-!gerenciamentoMercado.iml
-!README.md
+.idea/
+Data/
+target/
+derby.log

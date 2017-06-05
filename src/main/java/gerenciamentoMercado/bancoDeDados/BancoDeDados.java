@@ -135,4 +135,40 @@ public class BancoDeDados {
         }
     }
 
+    public Vector<Cliente> mostrarClientes(){
+        Vector<Cliente> clientes = new Vector<Cliente>();
+
+        String sql = "SELECT * FROM Cliente";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet res = stmt.executeQuery();
+            while(res.next()) {
+                String nome = res.getString(1);
+                String cpf = res.getString(2);
+                String rg = res.getString(3);
+                String rua = res.getString(4);
+                String cep = res.getString(5);
+                String bairro = res.getString(6);
+                String cidade = res.getString(7);
+                String estado = res.getString(8);
+                int numero = res.getInt(9);
+                String complemento = res.getString(10);
+                String telefone = res.getString(11);
+                String celular = res.getString(12);
+                String cartao = res.getString(13);
+
+                clientes.add(new Cliente(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, cartao, nome));
+            }
+
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return clientes;
+    }
+
 }

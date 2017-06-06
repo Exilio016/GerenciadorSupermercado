@@ -44,7 +44,7 @@ public class BancoDeDados {
             stmt.execute();
             stmt.close();
 
-            sql = "INSERT INTO Conta (usuario, senha) VALUES (admin, admin)";
+            sql = "INSERT INTO Conta (usuario, senha) VALUES ('admin', 'admin')";
             stmt = conn.prepareStatement(sql);
             stmt.execute();
             stmt.close();
@@ -169,6 +169,25 @@ public class BancoDeDados {
         }
 
         return clientes;
+    }
+
+    public boolean logar(String usuario, String senha){
+        String sql = "SELECT * FROM Conta WHERE usuario = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, usuario);
+
+            ResultSet re = stmt.executeQuery();
+            if(re.next() && re.getString("senha").equals(senha)){
+                return true;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            return false;
+        }
+
     }
 
 }

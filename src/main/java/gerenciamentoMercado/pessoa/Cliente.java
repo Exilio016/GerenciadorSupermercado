@@ -15,10 +15,10 @@ public class Cliente extends Pessoa{
     }
     
     public static float getDesconto() {
-		return desconto;
-	}
+	return desconto;
+    }
 
-	public static void setDesconto(float desconto) {
-		Cliente.desconto = desconto;
-	}
+    public static void setDesconto(float desconto) {
+	Cliente.desconto = desconto;
+    }
 }

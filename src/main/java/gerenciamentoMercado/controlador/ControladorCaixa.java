@@ -10,17 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-/**
- * Created by nding on 07/06/2017.
- */
 public class ControladorCaixa implements ActionListener, KeyListener{
     private MainGUI frame;
     private CaixaGUI panel;
     private BancoDeDados bd;
     private float valor_final = 0;
-    private HashMap<Produto, Integer> produtos = new HashMap<Produto, Integer>();
+    private ArrayList<Produto> produtos = new ArrayList<Produto>();
+
+    private static final int REMOCAO_OP = -1;
+    private static final int ADICAO_OP = 1;
 
     public ControladorCaixa(MainGUI frame, CaixaGUI panel){
         this.frame = frame;
@@ -48,34 +49,30 @@ public class ControladorCaixa implements ActionListener, KeyListener{
             }
 
             Produto p = bd.mostrarProduto(codigo);
-            if(p != null) {
+            if(p != null && quantidade > 0) {
+                p.setQuantidade(quantidade);
                 valor_final += p.getPreco() * quantidade;
 
-                if (!produtos.containsKey(p)) {
-                    produtos.put(p, quantidade);
-                }
-                else {
-                    int quantidadeTotal = quantidade + produtos.get(p);
-                    produtos.remove(p);
-                    produtos.put(p, quantidadeTotal);
+                boolean encontrou = false;
+                for(Produto produto : produtos){
+                    if(produto.equals(p)){
+                        produto.setQuantidade(produto.getQuantidade()+quantidade);
+                        encontrou = true;
+                        break;
+                    }
                 }
 
-                JTextArea produtosField = panel.getProdutos();
-                String aux = produtosField.getText();
-                String produtoString = codigo + " " + p.getDescricao() + " " + p.getMarca() + " " +
-                               p.getPreco() + " * " + quantidade + " = " + (p.getPreco() * quantidade) + "\n";
-                produtosField.setText(aux+produtoString); //TODO alterar impressão aki
+                if(!encontrou){
+                    produtos.add(p);
+                }
 
+                atualizarProdutosArea(p, quantidade, ControladorCaixa.ADICAO_OP);
                 panel.getValorTotal().setText(Float.toString(valor_final));
 
             }
         }
 
         else if(e.getActionCommand().equals("FINALIZAR_COMPRA")){
-            for(Produto p : produtos.keySet()){
-                int quantidade = produtos.remove(p);
-                bd.venderProduto(p.getCodigo(), quantidade); //Diminui do banco os produtos ventidos
-            }
         }
 
         else  if(e.getActionCommand().equals("CANCELAR_COMPRA")){
@@ -89,6 +86,52 @@ public class ControladorCaixa implements ActionListener, KeyListener{
              if(JOptionPane.showConfirmDialog(panel, "Deseja cancelar a compra?") == JOptionPane.OK_OPTION){
                  this.resetarGUI();
              }
+        }
+
+        else if(e.getActionCommand().equals("REMOVER_PRODUTO")){
+            int codigo = -1;
+            int quantidadeRemovida = 0;
+
+            try {
+                codigo = Integer.parseInt(JOptionPane.showInputDialog(panel, "Digite o código do produto a ser removido:"));
+                quantidadeRemovida = Integer.parseInt(JOptionPane.showInputDialog(panel, "Digite a quantidade:"));
+            }catch (Exception ex){
+            }
+
+            if(quantidadeRemovida > 0) {
+                //TODO Consertar erro
+                Produto p = null;
+                Iterator<Produto> it = produtos.iterator();
+
+                boolean encontrou = false;
+                while(it.hasNext() && !encontrou){
+                    p = it.next();
+
+                    if(p.getCodigo() == codigo)
+                        encontrou = true;
+                }
+
+                if(encontrou){
+                    int quantidade = p.getQuantidade();
+                    if(quantidadeRemovida <= quantidade){
+                        quantidade -= quantidadeRemovida;
+                        valor_final -= p.getPreco() * quantidadeRemovida;
+
+                        if(quantidade > 0){
+                            p.setQuantidade(quantidade);
+                        }
+                        else {
+                            produtos.remove(p);
+                        }
+
+                        atualizarProdutosArea(p, quantidadeRemovida, ControladorCaixa.REMOCAO_OP);
+                        panel.getValorTotal().setText(Float.toString(valor_final));
+                    }
+                }
+
+            }
+
+
         }
     }
 
@@ -132,4 +175,18 @@ public class ControladorCaixa implements ActionListener, KeyListener{
         panel.getProdutos().setText("");
         panel.getQuantidadeProduto().setText("1");
     }
+
+    private void atualizarProdutosArea(Produto p, int quantidade, int operacao){
+        String prefixo = "Adicionado: ";
+
+        if(operacao == ControladorCaixa.REMOCAO_OP)
+            prefixo = "Removido: ";
+
+        JTextArea produtosField = panel.getProdutos();
+        String aux = produtosField.getText();
+        String produtoString = prefixo + p.codigo + " - " + p.getDescricao() + ", " + p.getMarca() + " , valor :" +
+                p.getPreco() + " * " + quantidade + " = " + (operacao * p.getPreco() * quantidade) + "\n";
+        produtosField.setText(aux + produtoString); //TODO alterar impressão aki
+    }
+
 }

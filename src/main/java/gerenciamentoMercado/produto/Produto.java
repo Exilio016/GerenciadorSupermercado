@@ -4,7 +4,7 @@ public class Produto {
 	public int quantidade, codigo;
 	public float preco;
 	public String nome, marca, descricao;
-	
+
 	public Produto(int quantidade, float preco, String nome, String marca, String descricao, int codigo) {
 		this.quantidade = quantidade;
 		this.preco = preco;
@@ -13,11 +13,15 @@ public class Produto {
 		this.descricao = descricao;
 		this.codigo = codigo;
 	}
-	
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
 	public void vendeProduto(int quantidade) {
 		this.quantidade -= quantidade;
 	}
-	
+
 	public void restocaProduto(int quantidade) {
 		this.quantidade += quantidade;
 	}
@@ -45,4 +49,15 @@ public class Produto {
 	public int getCodigo() {
 		return codigo;
 	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(obj instanceof Produto){
+			Produto p = (Produto)obj;
+
+			return (codigo == p.getCodigo());
+		}
+		return false;
+	}
+
 }

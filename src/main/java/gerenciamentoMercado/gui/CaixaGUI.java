@@ -18,6 +18,7 @@ public class CaixaGUI extends JPanel{
 	private JTextField valorTotal = new JTextField();
 	private JTextArea produtos = new JTextArea();
 
+	private JButton removerProduto = new JButton();
 	private JButton finalizar = new JButton();
 	private JButton cancelar = new JButton();
 	private JButton fechar = new JButton();
@@ -69,6 +70,15 @@ public class CaixaGUI extends JPanel{
 		this.construirCentro();
 		this.construirLeste();
 
+		JPanel borda1 = new JPanel();
+		borda1.setOpaque(false);
+
+		JPanel borda2 = new JPanel();
+		borda2.setOpaque(false);
+
+		this.add(borda1, BorderLayout.SOUTH);
+		this.add(borda2, BorderLayout.WEST);
+
 		try {
 			 backgroundImage = ImageIO.read(new File(".\\images\\background.jpg"));
 		} catch (IOException ex) {
@@ -80,6 +90,10 @@ public class CaixaGUI extends JPanel{
 		codigoProduto.setActionCommand("COMPUTAR_PRODUTO");
 		codigoProduto.addActionListener(controladorCaixa);
 		codigoProduto.addKeyListener(controladorCaixa);
+
+		removerProduto.setText("Remover produto");
+		removerProduto.setActionCommand("REMOVER_PRODUTO");
+		removerProduto.addActionListener(controladorCaixa);
 
 		finalizar.setText("Finalzar compra");
 		finalizar.setActionCommand("FINALIZAR_COMPRA");
@@ -154,11 +168,9 @@ public class CaixaGUI extends JPanel{
 		panel.setPreferredSize(new Dimension((int) (0.6 * d.getWidth()), (int)(0.9 * d.getHeight())));
 		panel.setOpaque(false);
 
-		JScrollPane centerPanel = new JScrollPane();
-		centerPanel.setPreferredSize(new Dimension((int) (0.55 * d.getWidth()), (int)(0.85 * d.getHeight())));
-		centerPanel.add(produtos);
+		JScrollPane centerPanel = new JScrollPane(produtos);
 		produtos.setEditable(false);
-		panel.add(produtos, BorderLayout.CENTER); //Arrumar isso
+		panel.add(centerPanel, BorderLayout.CENTER);
 
 		JPanel auxPanel1 = new JPanel(new FlowLayout());
 		auxPanel1.add(new JLabel("Valor Total: "));
@@ -173,13 +185,13 @@ public class CaixaGUI extends JPanel{
 
 	private void construirLeste(){
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(3, 1));
+		panel.setLayout(new GridLayout(4, 1));
 		panel.setPreferredSize(new Dimension((int) (0.12 * d.getWidth()), (int)(0.6 * d.getHeight())));
 		panel.setOpaque(false);
 
 		JPanel aux1 = new JPanel();
 		aux1.setOpaque(false);
-		aux1.add(finalizar);
+		aux1.add(removerProduto);
 
 		JPanel aux2 = new JPanel();
 		aux2.setOpaque(false);
@@ -187,15 +199,21 @@ public class CaixaGUI extends JPanel{
 
 		JPanel aux3 = new JPanel();
 		aux3.setOpaque(false);
-		aux3.add(fechar);
+		aux3.add(finalizar);
+
+		JPanel aux4 = new JPanel();
+		aux4.setOpaque(false);
+		aux4.add(fechar);
 
 		panel.add(aux1);
 		panel.add(aux2);
 		panel.add(aux3);
+		panel.add(aux4);
 
+		/*
 		finalizar.setSize(new Dimension((int) (0.1 * d.getWidth()), 40));
 		cancelar.setSize(new Dimension((int) (0.1 * d.getWidth()), 40));
-		fechar.setSize(new Dimension((int) (0.1 * d.getWidth()), 40));
+		fechar.setSize(new Dimension((int) (0.1 * d.getWidth()), 40));*/
 
 		this.add(panel, BorderLayout.EAST);
 

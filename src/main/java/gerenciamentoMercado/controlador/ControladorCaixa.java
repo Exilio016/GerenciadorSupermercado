@@ -19,6 +19,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     private MainGUI frame;
     private CaixaGUI panel;
     private BancoDeDados bd;
+    private float valor_final = 0;
     private HashMap<Produto, Integer> produtos = new HashMap<Produto, Integer>();
 
     public ControladorCaixa(MainGUI frame, CaixaGUI panel){
@@ -48,6 +49,8 @@ public class ControladorCaixa implements ActionListener, KeyListener{
 
             Produto p = bd.mostrarProduto(codigo);
             if(p != null) {
+                valor_final += p.getPreco() * quantidade;
+
                 if (!produtos.containsKey(p)) {
                     produtos.put(p, quantidade);
                 }
@@ -61,19 +64,31 @@ public class ControladorCaixa implements ActionListener, KeyListener{
                 String aux = produtosField.getText();
                 String produtoString = codigo + " " + p.getDescricao() + " " + p.getMarca() + " " +
                                p.getPreco() + " * " + quantidade + " = " + (p.getPreco() * quantidade) + "\n";
-                produtosField.setText(aux+produtoString);
+                produtosField.setText(aux+produtoString); //TODO alterar impressão aki
+
+                panel.getValorTotal().setText(Float.toString(valor_final));
 
             }
         }
 
         else if(e.getActionCommand().equals("FINALIZAR_COMPRA")){
-            float valor_final = 0;
             for(Produto p : produtos.keySet()){
                 int quantidade = produtos.remove(p);
-                valor_final += p.getPreco()*quantidade;
-
                 bd.venderProduto(p.getCodigo(), quantidade); //Diminui do banco os produtos ventidos
             }
+        }
+
+        else  if(e.getActionCommand().equals("CANCELAR_COMPRA")){
+            /*
+            O Programa executa esse 'if' quando o botão 'Cancelar Compra' for pressionado
+            Uma janela de confirmação surgirá na tela
+            Se verdadeiro, os valores impressos na tela serão apagados
+            E a CaixaGUI voltará ao estado inicial
+             */
+
+             if(JOptionPane.showConfirmDialog(panel, "Deseja cancelar a compra?") == JOptionPane.OK_OPTION){
+                 this.resetarGUI();
+             }
         }
     }
 
@@ -104,5 +119,17 @@ public class ControladorCaixa implements ActionListener, KeyListener{
             panel.getDescricaoProduto().setText(p.getDescricao()); //Atualiza descrição
         }
 
+    }
+
+    private void resetarGUI(){
+        this.valor_final = 0;
+        this.produtos.clear();
+
+        panel.getValorTotal().setText("");
+        panel.getCodigoProduto().setText("");
+        panel.getDescricaoProduto().setText("");
+        panel.getValorProduto().setText("");
+        panel.getProdutos().setText("");
+        panel.getQuantidadeProduto().setText("1");
     }
 }

@@ -1,6 +1,7 @@
 package gerenciamentoMercado.bancoDeDados;
 
 import gerenciamentoMercado.pessoa.Cliente;
+import gerenciamentoMercado.produto.Produto;
 
 import java.sql.*;
 import java.util.Vector;
@@ -26,7 +27,7 @@ public class BancoDeDados {
         }
 
         try {
-            String sql = "CREATE TABLE Cliente (nome VARCHAR(32), cpf VARCHAR(11) NOT NULL, rg VARCHAR(15), rua VARCHAR(50), cep VARCHAR(8), bairro VARCHAR(25), cidade VARCHAR(25), estado VARCHAR(25), numero INT, complemento VARCHAR(25), telefone VARCHAR(11), celular VARCHAR(12), cartao VARCHAR(16), primary key (cpf) )";
+            String sql = "CREATE TABLE Cliente (nome VARCHAR(50), cpf VARCHAR(11) NOT NULL, rg VARCHAR(15), rua VARCHAR(50), cep VARCHAR(8), bairro VARCHAR(25), cidade VARCHAR(25), estado VARCHAR(25), numero INT, complemento VARCHAR(25), telefone VARCHAR(11), celular VARCHAR(12), cartao VARCHAR(16), primary key (cpf) )";
 
             stmt = conn.prepareStatement(sql); //Se nao existir, cria a tabela clientes
             stmt.execute();
@@ -35,6 +36,16 @@ public class BancoDeDados {
             //Se deu excecao, a tabela ja existe no banco
         }
 
+        try{
+            String sql = "CREATE TABLE Produto (nome VARCHAR(50), descricao VARCHAR(50), marca VARCHAR(50), codigo INT, valorUnitario FLOAT, quantidade INT)";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.execute();
+            stmt.close();
+
+        }catch (SQLException se){
+
+        }
 
         //Se o banco de dados estiver vazio, cria-se as tabelas do programa
         try {
@@ -190,4 +201,84 @@ public class BancoDeDados {
 
     }
 
+    public void adicionarProduto(Produto produto){
+        if(produto != null){
+            String sql = "INSERT INTO Produto (nome, descricao, marca, codigo, valorUnitario, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
+
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                stmt.setString(1, produto.getNome());
+                stmt.setString(2, produto.getDescricao());
+                stmt.setString(3, produto.getMarca());
+                stmt.setInt(4, produto.getCodigo());
+                stmt.setFloat(5, produto.getPreco());
+                stmt.setInt(6, produto.getQuantidade());
+
+                stmt.execute();
+                stmt.close();
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Produto mostrarProduto(int codigo){
+        String sql = "SELECT * FROM Produto WHERE codigo= ?";
+        Produto produto = null;
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, codigo);
+            ResultSet res = stmt.executeQuery();
+
+            if(res.next()){
+                String nome = res.getString(1);
+                String descricao = res.getString(2);
+                String marca = res.getString(3);
+                float valor = res.getFloat(5);
+                int quantidade = res.getInt(6);
+
+                produto = new Produto(quantidade, valor, nome, marca, descricao, codigo);
+            }
+
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return produto;
+    }
+
+    public void venderProduto(int codigo, int quantidade){
+        String sql = "UPDATE Produto SET quantidade = ? WHERE codigo = ?";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, quantidade);
+            stmt.setInt(2, codigo);
+
+            stmt.execute();
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void removerProduto (int codigo){
+        String sql = "DELETE FROM Produto WHERE codigo = ?";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+
+            stmt.execute();
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

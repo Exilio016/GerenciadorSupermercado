@@ -37,7 +37,7 @@ public class MainGUI extends JFrame implements ActionListener{
                 System.out.println("Login realizado com sucesso");
                 
                 //TODO trocar para janela de controle do caixa
-                this.setContentPane(new CaixaGUI(this));
+                this.setContentPane(new CaixaGUI(this, screenSize));
             }
             else {
             	JOptionPane.showMessageDialog(this, "Erro ao realizar o login! \nUsuario ou senha incorretos");
@@ -45,5 +45,9 @@ public class MainGUI extends JFrame implements ActionListener{
             }
 
         }
+    }
+
+    public BancoDeDados getBanco(){
+        return bd;
     }
 }

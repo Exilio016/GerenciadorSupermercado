@@ -1,11 +1,11 @@
 package gerenciamentoMercado.produto;
 
 public class Produto {
-	public int quantidade;
-	public double preco;
-	public String nome, marca, descricao, codigo;
+	public int quantidade, codigo;
+	public float preco;
+	public String nome, marca, descricao;
 	
-	public Produto(int quantidade, double preco, String nome, String marca, String descricao, String codigo) {
+	public Produto(int quantidade, float preco, String nome, String marca, String descricao, int codigo) {
 		this.quantidade = quantidade;
 		this.preco = preco;
 		this.nome = nome;
@@ -26,7 +26,7 @@ public class Produto {
 		return quantidade;
 	}
 
-	public double getPreco() {
+	public float getPreco() {
 		return preco;
 	}
 
@@ -42,7 +42,7 @@ public class Produto {
 		return descricao;
 	}
 
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
 }

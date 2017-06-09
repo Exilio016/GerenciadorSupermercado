@@ -73,6 +73,12 @@ public class ControladorCaixa implements ActionListener, KeyListener{
         }
 
         else if(e.getActionCommand().equals("FINALIZAR_COMPRA")){
+            float valor_compra = valor_final;
+            String notaFiscal = panel.getProdutos().getText();
+
+            //TODO ir para a GUI de finalizar compra
+            this.resetarGUI();
+
         }
 
         else  if(e.getActionCommand().equals("CANCELAR_COMPRA")){

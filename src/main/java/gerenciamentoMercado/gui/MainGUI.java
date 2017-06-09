@@ -14,13 +14,17 @@ public class MainGUI extends JFrame implements ActionListener{
     private JMenuBar menuBar = new JMenuBar();
 
     private CaixaGUI caixaGUI;
+    private LoginGUI loginGUI;
 
     public MainGUI (BancoDeDados bd){
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(400,400);
+        this.setAlwaysOnTop(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(new LoginGUI(this));
         this.bd = bd;
+
+        loginGUI = new LoginGUI(this);
+        this.setContentPane(loginGUI);
 
         this.setTitle("Gerenciador de Supermercado");
 
@@ -49,6 +53,7 @@ public class MainGUI extends JFrame implements ActionListener{
     public static void main(String[] args) throws SQLException {
         MainGUI gui = new MainGUI(new BancoDeDados());
         gui.setVisible(true);
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -84,5 +89,9 @@ public class MainGUI extends JFrame implements ActionListener{
 
     public BancoDeDados getBanco(){
         return bd;
+    }
+
+    public void close(){
+        this.dispose();
     }
 }

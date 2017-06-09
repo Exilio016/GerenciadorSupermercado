@@ -13,7 +13,14 @@ public class LoginGUI extends JPanel {
         login.addActionListener(frame);
         
         usuario.setPreferredSize(new Dimension(300, 30));
+        //As 2 linhas abaixo permitem que ao pressionar ENTER ele faça o login
+        usuario.setActionCommand("LOGIN");
+        usuario.addActionListener(frame);
+
         senha.setPreferredSize(new Dimension(300, 30));
+        //As 2 linhas abaixo permitem que ao pressionar ENTER ele faça o login
+        senha.setActionCommand("LOGIN");
+        senha.addActionListener(frame);
 
         JPanel usuarioPanel = new JPanel();
         usuarioPanel.setLayout(new FlowLayout());

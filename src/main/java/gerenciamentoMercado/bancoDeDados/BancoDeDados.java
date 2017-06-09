@@ -37,7 +37,7 @@ public class BancoDeDados {
         }
 
         try{
-            String sql = "CREATE TABLE Produto (nome VARCHAR(50), descricao VARCHAR(50), marca VARCHAR(50), codigo INT, valorUnitario FLOAT, quantidade INT)";
+            String sql = "CREATE TABLE Produto (nome VARCHAR(50), descricao VARCHAR(50), marca VARCHAR(50), codigo INT, valorUnitario FLOAT, quantidade INT, primary key (codigo))";
 
             stmt = conn.prepareStatement(sql);
             stmt.execute();

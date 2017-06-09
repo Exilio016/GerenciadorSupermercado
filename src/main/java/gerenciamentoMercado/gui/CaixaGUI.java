@@ -158,7 +158,7 @@ public class CaixaGUI extends JPanel{
 		centerPanel.setPreferredSize(new Dimension((int) (0.55 * d.getWidth()), (int)(0.85 * d.getHeight())));
 		centerPanel.add(produtos);
 		produtos.setEditable(false);
-		panel.add(centerPanel, BorderLayout.CENTER);
+		panel.add(produtos, BorderLayout.CENTER); //Arrumar isso
 
 		JPanel auxPanel1 = new JPanel(new FlowLayout());
 		auxPanel1.add(new JLabel("Valor Total: "));

@@ -3,6 +3,7 @@ package gerenciamentoMercado.gui;
 import gerenciamentoMercado.controlador.ControladorCaixa;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -63,12 +64,14 @@ public class CaixaGUI extends JPanel{
 	}
 
 	public CaixaGUI(MainGUI frame, Dimension d){
-		this.d = d;
+		ControladorCaixa controladorCaixa = new ControladorCaixa(frame, this);
 
+		this.d = d;
 		this.setLayout(new BorderLayout());
 		this.construirNorte();
 		this.construirCentro();
 		this.construirLeste();
+		this.gerarKeyMap(controladorCaixa);
 
 		JPanel borda1 = new JPanel();
 		borda1.setOpaque(false);
@@ -85,28 +88,29 @@ public class CaixaGUI extends JPanel{
 			ex.printStackTrace(System.err);
 		}
 
-		ControladorCaixa controladorCaixa = new ControladorCaixa(frame, this);
+
 
 		codigoProduto.setActionCommand("COMPUTAR_PRODUTO");
 		codigoProduto.addActionListener(controladorCaixa);
 		codigoProduto.addKeyListener(controladorCaixa);
 
-		removerProduto.setText("Remover produto");
+		quantidadeProduto.setActionCommand("COMPUTAR_PRODUTO");
+		quantidadeProduto.addActionListener(controladorCaixa);
+
+		removerProduto.setText("Remover produto - F1");
 		removerProduto.setActionCommand("REMOVER_PRODUTO");
 		removerProduto.addActionListener(controladorCaixa);
 
-		finalizar.setText("Finalzar compra");
+		finalizar.setText("Finalzar compra - F3");
 		finalizar.setActionCommand("FINALIZAR_COMPRA");
 		finalizar.addActionListener(controladorCaixa);
 
-		cancelar.setText("Cancelar compra");
+		cancelar.setText("Cancelar compra - F2");
 		cancelar.setActionCommand("CANCELAR_COMPRA");
 		cancelar.addActionListener(controladorCaixa);
 
-		fechar.setText("Fechar caixa");
+		fechar.setText("Fechar caixa - F4");
 		fechar.setActionCommand("FECHAR_CAIXA");
-		fechar.addActionListener(controladorCaixa);
-
 	}
 
 
@@ -210,13 +214,23 @@ public class CaixaGUI extends JPanel{
 		panel.add(aux3);
 		panel.add(aux4);
 
-		/*
-		finalizar.setSize(new Dimension((int) (0.1 * d.getWidth()), 40));
-		cancelar.setSize(new Dimension((int) (0.1 * d.getWidth()), 40));
-		fechar.setSize(new Dimension((int) (0.1 * d.getWidth()), 40));*/
-
 		this.add(panel, BorderLayout.EAST);
 
+	}
+
+	private void gerarKeyMap(ControladorCaixa controladorCaixa){
+		InputMap imap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap amap = this.getActionMap();
+
+		amap.put("REMOVER_PRODUTO", new CaixaGUIActions(this, controladorCaixa, "REMOVER_PRODUTO"));
+		amap.put("CANCELAR_COMPRA", new CaixaGUIActions(this, controladorCaixa, "CANCELAR_COMPRA"));
+		amap.put("FINALIZAR_COMPRA", new CaixaGUIActions(this, controladorCaixa, "FINALIZAR_COMPRA"));
+		amap.put("FECHAR_CAIXA", new CaixaGUIActions(this, controladorCaixa, "FECHAR_CAIXA"));
+
+		imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "REMOVER_PRODUTO");
+		imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "CANCELAR_COMPRA");
+		imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0), "FINALIZAR_COMPRA");
+		imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "FECHAR_CAIXA");
 	}
 
 	@Override

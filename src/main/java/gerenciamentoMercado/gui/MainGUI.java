@@ -71,6 +71,7 @@ public class MainGUI extends JFrame implements ActionListener{
                 
                 this.setJMenuBar(menuBar);
                 this.setContentPane(caixaGUI);
+
             }
             else {
             	JOptionPane.showMessageDialog(this, "Erro ao realizar o login! \nUsuario ou senha incorretos");

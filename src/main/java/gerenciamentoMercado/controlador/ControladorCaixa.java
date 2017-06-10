@@ -94,7 +94,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
              }
         }
 
-        else if(e.getActionCommand().equals("REMOVER_PRODUTO")){
+        else if(e.getActionCommand().equals("REMOVER_PRODUTO") || e.getActionCommand().equals("F1")){
             int codigo = -1;
             int quantidadeRemovida = 0;
 

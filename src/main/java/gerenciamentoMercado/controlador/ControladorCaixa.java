@@ -30,6 +30,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     }
 
     public void actionPerformed(ActionEvent e) {
+        System.out.println(e.getActionCommand());
         if(e.getActionCommand().equals("COMPUTAR_PRODUTO")){
             /*
              * O Programe executa esse 'if' sempre que for apertado ENTER na barra 'Codigo do Produto' da CaixaGUI

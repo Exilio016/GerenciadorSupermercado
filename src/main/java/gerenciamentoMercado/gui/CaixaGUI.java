@@ -26,7 +26,7 @@ public class CaixaGUI extends JPanel{
 	private JButton fechar = new JButton();
 
 	private BufferedImage backgroundImage;
-	private Dimension d;
+	private Dimension screenSize;
 
 	public JTextField getCodigoProduto() {
 		return codigoProduto;
@@ -64,10 +64,10 @@ public class CaixaGUI extends JPanel{
 		return fechar;
 	}
 
-	public CaixaGUI(MainGUI frame, Dimension d){
+	public CaixaGUI(MainGUI frame, Dimension screenSize){
 		ControladorCaixa controladorCaixa = new ControladorCaixa(frame, this);
 
-		this.d = d;
+		this.screenSize = screenSize;
 		this.setLayout(new BorderLayout());
 		this.construirNorte();
 		this.construirCentro();
@@ -88,8 +88,6 @@ public class CaixaGUI extends JPanel{
 		} catch (IOException ex) {
 			ex.printStackTrace(System.err);
 		}
-
-
 
 		codigoProduto.setActionCommand("COMPUTAR_PRODUTO");
 		codigoProduto.addActionListener(controladorCaixa);
@@ -119,9 +117,9 @@ public class CaixaGUI extends JPanel{
 	 * Método auxiliar na construção da GUI, cria a borda norte do JPanel
 	 */
 	private void construirNorte(){
-		int boxWidth1 = (int) (d.getWidth() * 0.5) ;
-		int boxWidth2 = (int) (d.getWidth() * 0.2) ;
-		int boxWidth3 = (int) (d.getWidth() * 0.1) ;
+		int boxWidth1 = (int) (screenSize.getWidth() * 0.5) ;
+		int boxWidth2 = (int) (screenSize.getWidth() * 0.2) ;
+		int boxWidth3 = (int) (screenSize.getWidth() * 0.1) ;
 
 		JPanel inserirPanel = new JPanel();
 		inserirPanel.setLayout(new GridLayout(2, 1));
@@ -170,7 +168,7 @@ public class CaixaGUI extends JPanel{
 	private void construirCentro(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		panel.setPreferredSize(new Dimension((int) (0.6 * d.getWidth()), (int)(0.9 * d.getHeight())));
+		panel.setPreferredSize(new Dimension((int) (0.6 * screenSize.getWidth()), (int)(0.9 * screenSize.getHeight())));
 		panel.setOpaque(false);
 
 		JScrollPane centerPanel = new JScrollPane(produtos);
@@ -181,7 +179,7 @@ public class CaixaGUI extends JPanel{
 		auxPanel1.add(new JLabel("Valor Total: "));
 
 		valorTotal.setEditable(false);
-		valorTotal.setPreferredSize(new Dimension((int) (0.4 * d.getHeight()), 30));
+		valorTotal.setPreferredSize(new Dimension((int) (0.4 * screenSize.getHeight()), 30));
 		auxPanel1.add(valorTotal);
 		panel.add(auxPanel1, BorderLayout.SOUTH);
 
@@ -191,7 +189,7 @@ public class CaixaGUI extends JPanel{
 	private void construirLeste(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4, 1));
-		panel.setPreferredSize(new Dimension((int) (0.12 * d.getWidth()), (int)(0.6 * d.getHeight())));
+		panel.setPreferredSize(new Dimension((int) (0.12 * screenSize.getWidth()), (int)(0.6 * screenSize.getHeight())));
 		panel.setOpaque(false);
 
 		JPanel aux1 = new JPanel();

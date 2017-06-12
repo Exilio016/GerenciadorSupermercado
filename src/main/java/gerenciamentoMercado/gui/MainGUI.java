@@ -15,6 +15,7 @@ public class MainGUI extends JFrame implements ActionListener{
 
     private CaixaGUI caixaGUI;
     private LoginGUI loginGUI;
+    private ClientesGUI clientesGUI;
 
     public MainGUI (BancoDeDados bd){
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -28,21 +29,21 @@ public class MainGUI extends JFrame implements ActionListener{
 
         this.setTitle("Gerenciador de Supermercado");
 
-        JMenu caixa = new JMenu("Caixa");
+        JMenuItem caixa = new JMenuItem("  Caixa");
         caixa.setActionCommand("CAIXA");
         caixa.addActionListener(this);
 
-        JMenu clientes = new JMenu("Clientes");
-        caixa.setActionCommand("CLIENTES");
-        caixa.addActionListener(this);
+        JMenuItem clientes = new JMenuItem("| Clientes");
+        clientes.setActionCommand("CLIENTES");
+        clientes.addActionListener(this);
 
-        JMenu estoque = new JMenu("Estoque");
-        caixa.setActionCommand("ESTOQUE");
-        caixa.addActionListener(this);
+        JMenuItem estoque = new JMenuItem("| Estoque");
+        estoque.setActionCommand("ESTOQUE");
+        estoque.addActionListener(this);
 
-        JMenu funcionarios = new JMenu("Funcionarios");
-        caixa.setActionCommand("FUNCIONARIOS");
-        caixa.addActionListener(this);
+        JMenuItem funcionarios = new JMenuItem("| Funcionarios");
+        funcionarios.setActionCommand("FUNCIONARIOS");
+        funcionarios.addActionListener(this);
 
         menuBar.add(caixa);
         menuBar.add(clientes);
@@ -57,13 +58,17 @@ public class MainGUI extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
+        System.out.println(e.getActionCommand());
         if(e.getActionCommand().equals("LOGIN")){
         	
             JTextField usuario = ((LoginGUI) this.getContentPane()).getUsuario();
             JPasswordField senha = ((LoginGUI) this.getContentPane()).getSenha();
 
             if(bd.logar(usuario.getText(), new String(senha.getPassword()))){
+
+                //Inicialização das GUI
                 this.caixaGUI = new CaixaGUI(this, screenSize);
+                this.clientesGUI = new ClientesGUI(this, screenSize);
 
                 this.setLocation(0, 0); //Centraliza a GUI
                 this.setSize(screenSize); //Aumenta o tamanho para a proxima GUI
@@ -82,10 +87,22 @@ public class MainGUI extends JFrame implements ActionListener{
 
         else if(e.getActionCommand().equals("CAIXA")){
             /*
-            Se o programa entrou no 'if' deve-se trocar a tela, para o CaixaGUI
+            Se o programa entrou no 'if' deve-se trocar a tela para o CaixaGUI
              */
+            this.getContentPane().setVisible(false);
             this.setContentPane(caixaGUI);
+            this.getContentPane().setVisible(true);
         }
+
+        else if (e.getActionCommand().equals("CLIENTES")) {
+            /*
+            Se o programa entrou no 'if' deve-se trocar a tela para o ClientesGUI
+             */
+            this.getContentPane().setVisible(false);
+            this.setContentPane(clientesGUI);
+            this.getContentPane().setVisible(true);
+        }
+
     }
 
     public BancoDeDados getBanco(){

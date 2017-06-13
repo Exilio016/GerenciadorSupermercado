@@ -122,8 +122,15 @@ public class CaixaGUI extends JPanel{
 		int boxWidth3 = (int) (screenSize.getWidth() * 0.1) ;
 
 		JPanel inserirPanel = new JPanel();
-		inserirPanel.setLayout(new GridLayout(2, 1));
+		inserirPanel.setLayout(new GridLayout(3, 1));
 		inserirPanel.setOpaque(false);
+
+		JLabel titulo = new JLabel("Caixa");
+		titulo.setFont(new Font("titulo", Font.BOLD, 32));
+		JPanel tituloPanel = new JPanel();
+		tituloPanel.setOpaque(false);
+		tituloPanel.add(titulo);
+		inserirPanel.add(tituloPanel);
 
 		JPanel panelAux1 = new JPanel();
 		panelAux1.setLayout(new FlowLayout());

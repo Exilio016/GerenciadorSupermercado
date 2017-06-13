@@ -12,50 +12,16 @@ import java.util.Vector;
 /**
  * Created by nding on 10/06/2017.
  */
-public class ClientesGUI extends JPanel {
-    private MainGUI frame;
-    private Dimension screenSize;
-    private BancoDeDados bd;
+public class ClientesGUI extends TableGUI {
 
-    private JButton inserir = new JButton("Inserir");
-    private JButton remover = new JButton("Remover");
-    private JButton editar = new JButton("Editar");
-    private DefaultTableModel modeloTabela = new DefaultTableModel();
-
-    public ClientesGUI(MainGUI frame, Dimension screenSize){
-        this.frame = frame;
-        this.screenSize = screenSize;
-        this.bd = frame.getBanco();
-
-        this.setLayout(new BorderLayout());
-        this.construirCentro();
+    public ClientesGUI(MainGUI frame, Dimension screenSize) {
+        super(frame, screenSize);
     }
 
-    private void construirNorte(){
-
-    }
-
-    private void construirCentro(){
-        JPanel panel = new JPanel(new BorderLayout());
-
-        JTable tabela = this.criarTabela();
-        JScrollPane rolagem = new JScrollPane(tabela);
-        panel.add(rolagem, BorderLayout.CENTER);
-
-        JPanel botoes = new JPanel(new FlowLayout());
-        botoes.add(inserir);
-        botoes.add(remover);
-        botoes.add(editar);
-        panel.add(botoes, BorderLayout.SOUTH);
-
-        this.add(panel, BorderLayout.CENTER);
-
-    }
-
-    private JTable criarTabela(){
+    @Override
+    protected void criarTabela(){
+        DefaultTableModel modeloTabela = getModeloTabela();
         JTable tabela = new JTable(modeloTabela);
-        tabela.setAutoscrolls(true);
-
         modeloTabela.addColumn("Nome");
         modeloTabela.addColumn("CPF");
         modeloTabela.addColumn("RG");
@@ -71,10 +37,15 @@ public class ClientesGUI extends JPanel {
         modeloTabela.addColumn("Cartao");
         this.atualizarTabela();
 
-        return tabela;
+        setTabela(tabela);
+
     }
 
-    private void atualizarTabela(){
+    @Override
+    public void atualizarTabela(){
+        DefaultTableModel modeloTabela = getModeloTabela();
+        BancoDeDados bd = getBd();
+
         modeloTabela.setNumRows(0);
 
         Vector<Cliente> clientes = bd.mostrarClientes();
@@ -85,6 +56,4 @@ public class ClientesGUI extends JPanel {
                     c.getTelefone(), c.getCelular(), c.getCartao()});
         }
     }
-
-
 }

@@ -17,6 +17,8 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     private MainGUI frame;
     private CaixaGUI panel;
     private BancoDeDados bd;
+    private String cpf;
+    private boolean primeira_execução = true;
     private float valor_final = 0;
     private ArrayList<Produto> produtos = new ArrayList<Produto>();
 
@@ -40,6 +42,12 @@ public class ControladorCaixa implements ActionListener, KeyListener{
              */
 
             int codigo, quantidade;
+
+            if(primeira_execução){
+                this.cpf = JOptionPane.showInputDialog(panel, "Digite o cpf:\n");
+                panel.getProdutos().setText("CPF: "+ cpf + "\n");
+                primeira_execução = false;
+            }
 
             try {
                 codigo = Integer.parseInt(panel.getCodigoProduto().getText());
@@ -174,12 +182,13 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     private void resetarGUI(){
         this.valor_final = 0;
         this.produtos.clear();
+        this.cpf = JOptionPane.showInputDialog(panel,"Digite o cpf:\n");
 
         panel.getValorTotal().setText("");
         panel.getCodigoProduto().setText("");
         panel.getDescricaoProduto().setText("");
         panel.getValorProduto().setText("");
-        panel.getProdutos().setText("");
+        panel.getProdutos().setText("CPF: " + this.cpf + "\n");
         panel.getQuantidadeProduto().setText("1");
     }
 

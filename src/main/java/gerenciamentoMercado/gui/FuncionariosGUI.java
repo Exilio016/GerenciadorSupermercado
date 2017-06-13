@@ -57,4 +57,21 @@ public class FuncionariosGUI extends TableGUI {
                     f.getTelefone(), f.getCelular(), f.getSalario(), f.getCargo()});
         }
     }
+
+    public void atualizarTabela(Vector conteudo) {
+        DefaultTableModel modeloTabela = getModeloTabela();
+        modeloTabela.setNumRows(0);
+
+        for(Object o : conteudo){
+            if(!(o instanceof Funcionario)){
+                return;
+            }
+            Funcionario f = (Funcionario) o;
+            Endereco e = f.getEnd();
+            modeloTabela.addRow(new Object[]{f.getNome(), f.getCPF(), f.getRG(),
+                    e.getCEP(), e.getEstado(), e.getCidade(), e.getBairro(), e.getRua(), e.getNumero(), e.getComplemento(),
+                    f.getTelefone(), f.getCelular(), f.getSalario(), f.getCargo()});
+
+        }
+    }
 }

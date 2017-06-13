@@ -56,4 +56,21 @@ public class ClientesGUI extends TableGUI {
                     c.getTelefone(), c.getCelular(), c.getCartao()});
         }
     }
+
+    public void atualizarTabela(Vector conteudo) {
+        DefaultTableModel modeloTabela = getModeloTabela();
+        modeloTabela.setNumRows(0);
+
+        for(Object o : conteudo){
+            if(!(o instanceof Cliente)){
+                return;
+            }
+            Cliente c = (Cliente) o;
+            Endereco e = c.getEnd();
+            modeloTabela.addRow(new Object[]{c.getNome(), c.getCPF(), c.getRG(),
+                    e.getCEP(), e.getEstado(), e.getCidade(), e.getBairro(), e.getRua(), e.getNumero(), e.getComplemento(),
+                    c.getTelefone(), c.getCelular(), c.getCartao()});
+
+        }
+    }
 }

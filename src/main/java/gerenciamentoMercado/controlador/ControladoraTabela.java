@@ -1,13 +1,13 @@
 package gerenciamentoMercado.controlador;
 
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
-import gerenciamentoMercado.gui.ClientesGUI;
-import gerenciamentoMercado.gui.MainGUI;
-import gerenciamentoMercado.gui.TableGUI;
+import gerenciamentoMercado.gui.*;
+import gerenciamentoMercado.pessoa.Cliente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 /**
  * Created by nding on 12/06/2017.
@@ -41,6 +41,30 @@ public class ControladoraTabela implements ActionListener{
 
         else if(e.getActionCommand().equals("INSERIR")){
 
+        }
+
+        else if(e.getActionCommand().equals("BUSCAR")){
+            String campo = panel.getCampoBusca().getText();
+            Vector resultado = new Vector();
+
+            if(panel instanceof ProdutosGUI){
+                try {
+                    int codigo = Integer.parseInt(campo);
+                    resultado.add(bd.mostrarProduto(codigo));
+                }catch (Exception ex){
+                    //
+                }
+            }
+            else if (panel instanceof  ClientesGUI)
+                resultado.add(bd.procurarCliente(campo));
+
+            else if (panel instanceof FuncionariosGUI)
+                resultado.add(bd.procurarFuncionario(campo));
+
+            if(resultado.isEmpty())
+                panel.atualizarTabela();
+            else
+                panel.atualizarTabela(resultado);
         }
     }
 }

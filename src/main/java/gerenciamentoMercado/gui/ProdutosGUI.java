@@ -44,4 +44,18 @@ public class ProdutosGUI extends TableGUI {
             modeloTabela.addRow(new Object[]{p.getDescricao(), p.getMarca(), p.getCodigo(), p.getPreco(), p.getQuantidade()});
         }
     }
+
+    public void atualizarTabela(Vector conteudo) {
+        DefaultTableModel modeloTabela = getModeloTabela();
+        modeloTabela.setNumRows(0);
+
+        for(Object o : conteudo){
+            if(!(o instanceof Produto)){
+                return;
+            }
+            Produto p = (Produto) o;
+            modeloTabela.addRow(new Object[]{p.getDescricao(), p.getMarca(), p.getCodigo(), p.getPreco(), p.getQuantidade()});
+
+        }
+    }
 }

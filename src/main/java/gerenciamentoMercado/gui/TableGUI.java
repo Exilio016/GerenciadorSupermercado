@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 /**
  * Created by nding on 12/06/2017.
@@ -23,6 +24,8 @@ public abstract class TableGUI extends JPanel{
     private JButton remover = new JButton("Remover");
     private JButton editar = new JButton("Editar");
     private JButton buscar = new JButton("Buscar");
+
+
     private JTextField campoBusca = new JTextField("");
     private DefaultTableModel modeloTabela = new DefaultTableModel();
     private JTable tabela;
@@ -110,6 +113,8 @@ public abstract class TableGUI extends JPanel{
 
     public abstract void atualizarTabela();
 
+    public abstract void atualizarTabela(Vector conteudo);
+
     @Override
     protected void paintComponent(final Graphics g){
         super.paintComponent(g);
@@ -188,5 +193,9 @@ public abstract class TableGUI extends JPanel{
 
     protected void setTabela(JTable tabela) {
         this.tabela = tabela;
+    }
+
+    public JTextField getCampoBusca() {
+        return campoBusca;
     }
 }

@@ -2,6 +2,7 @@ package gerenciamentoMercado.bancoDeDados;
 
 import gerenciamentoMercado.pessoa.Cliente;
 import gerenciamentoMercado.produto.Produto;
+import gerenciamentoMercado.pessoa.Funcionario;
 
 import java.sql.*;
 import java.util.Vector;
@@ -280,5 +281,155 @@ public class BancoDeDados {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+    
+    public Vector<Produto> mostrarProdutos(){
+        Vector<Produto> produtos = new Vector<Produto>();
+
+        String sql = "SELECT * FROM Produto";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet res = stmt.executeQuery();
+            while(res.next()) {
+                String nome = res.getString(1);
+                String descricao = res.getString(2);
+                String marca = res.getString(3);
+                int codigo = res.getInt(4);
+                float valor = res.getFloat(5);
+                int quantidade = res.getInt(6);
+
+                produtos.add(new Produto(quantidade, valor, nome, marca, descricao, codigo));
+            }
+
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return produtos;
+    }
+    
+    public Funcionario procurarFuncionario(String cpf) {
+        Funcionario ret = null;
+        String sql = "SELECT * FROM Funcionario WHERE cpf=?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, cpf);
+
+            ResultSet res = stmt.executeQuery();
+            if(res.next()) {
+                String nome = res.getString(1);
+                String rg = res.getString(3);
+                String rua = res.getString(4);
+                String cep = res.getString(5);
+                String bairro = res.getString(6);
+                String cidade = res.getString(7);
+                String estado = res.getString(8);
+                int numero = res.getInt(9);
+                String complemento = res.getString(10);
+                String telefone = res.getString(11);
+                String celular = res.getString(12);
+                double salario = res.getDouble(13);
+                int cargo = res.getInt(14);
+                
+
+                ret = new Funcionario(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, nome, salario, cargo);
+            }
+
+            stmt.close();
+
+
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return ret;
+    }
+
+    public void adicionarFuncionario(Funcionario funcionario){
+        if(funcionario != null){
+            String sql = "INSERT INTO Funcionario (nome, cpf, rg, cep, estado, cidade, bairro, rua, numero, complemento, telefone, celular, salario, cargo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            PreparedStatement stmt = null;
+            try {
+                stmt = conn.prepareStatement(sql);
+
+                stmt.setString(1, funcionario.getNome());
+                stmt.setString(2, funcionario.getCPF());
+                stmt.setString(3, funcionario.getRG());
+                stmt.setString(4, funcionario.getEnd().getCEP());
+                stmt.setString(5, funcionario.getEnd().getEstado());
+                stmt.setString(6, funcionario.getEnd().getCidade());
+                stmt.setString(7, funcionario.getEnd().getBairro());
+                stmt.setString(8, funcionario.getEnd().getRua());
+                stmt.setInt   (9, funcionario.getEnd().getNumero());
+                stmt.setString(10, funcionario.getEnd().getComplemento());
+                stmt.setString(11, funcionario.getTelefone());
+                stmt.setString(12, funcionario.getCelular());
+                stmt.setDouble(13, funcionario.getSalario());
+                stmt.setInt(14,  funcionario.getCargo());
+
+                stmt.execute();
+                stmt.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void removerFuncionario(String cpf){
+        String sql = "DELETE FROM Funcionario WHERE cpf = ?";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,cpf);
+
+            stmt.execute();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public Vector<Funcionario> mostrarFuncionarios(){
+        Vector<Funcionario> funcionarios = new Vector<Funcionario>();
+
+        String sql = "SELECT * FROM Funcionario";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet res = stmt.executeQuery();
+            while(res.next()) {
+                String nome = res.getString(1);
+                String cpf = res.getString(2);
+                String rg = res.getString(3);
+                String rua = res.getString(4);
+                String cep = res.getString(5);
+                String bairro = res.getString(6);
+                String cidade = res.getString(7);
+                String estado = res.getString(8);
+                int numero = res.getInt(9);
+                String complemento = res.getString(10);
+                String telefone = res.getString(11);
+                String celular = res.getString(12);
+                double salario = res.getDouble(13);
+                int cargo = res.getInt(14);
+
+                funcionarios.add(new Funcionario(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, nome, salario, cargo));
+            }
+
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return funcionarios;
     }
 }

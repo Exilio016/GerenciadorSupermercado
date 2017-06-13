@@ -1,6 +1,6 @@
 package gerenciamentoMercado.pessoa;
 
-public abstract class Funcionario extends Pessoa{
+public class Funcionario extends Pessoa{
 	private double salario;
 	private int cargo;
 	/**

@@ -245,10 +245,14 @@ public class CaixaGUI extends JPanel{
 
 		Rectangle rect  = new Rectangle(0,0, this.getWidth(), this.getHeight());
 
-		TexturePaint p = new TexturePaint(backgroundImage, rect);
-		Graphics2D g2 = (Graphics2D)g;
-
-		g2.setPaint(p);
-		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+		try{
+			TexturePaint p = new TexturePaint(backgroundImage, rect);
+			Graphics2D g2 = (Graphics2D)g;
+	
+			g2.setPaint(p);
+			g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+		}catch(Exception e){
+			
+		}
 	}
 }

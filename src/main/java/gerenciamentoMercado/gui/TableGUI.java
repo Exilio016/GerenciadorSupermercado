@@ -22,6 +22,8 @@ public abstract class TableGUI extends JPanel{
     private JButton inserir = new JButton("Inserir");
     private JButton remover = new JButton("Remover");
     private JButton editar = new JButton("Editar");
+    private JButton buscar = new JButton("Buscar");
+    private JTextField campoBusca = new JTextField("");
     private DefaultTableModel modeloTabela = new DefaultTableModel();
     private JTable tabela;
 
@@ -71,6 +73,8 @@ public abstract class TableGUI extends JPanel{
     }
 
     private void construirCentro(){
+    	ControladoraTabela controlador = new ControladoraTabela(frame, this);
+    	
         JPanel panel = new JPanel(new BorderLayout());
         panel.setOpaque(false);
 
@@ -82,13 +86,21 @@ public abstract class TableGUI extends JPanel{
         botoes.add(inserir);
         botoes.add(remover);
         botoes.add(editar);
-        panel.add(botoes, BorderLayout.SOUTH);
+        botoes.add(campoBusca);
+        botoes.add(buscar);
+        panel.add(botoes, BorderLayout.NORTH);
 
         inserir.setActionCommand("INSERIR");
         remover.setActionCommand("REMOVER");
         editar.setActionCommand("EDITAR");
+        buscar.setActionCommand("BUSCAR");
 
-        remover.addActionListener(new ControladoraTabela(frame, this));
+        inserir.addActionListener(controlador);
+        remover.addActionListener(controlador);
+        editar.addActionListener(controlador);
+        buscar.addActionListener(controlador);
+        
+        campoBusca.setPreferredSize(new Dimension(200, 20));
 
         this.add(panel, BorderLayout.CENTER);
 

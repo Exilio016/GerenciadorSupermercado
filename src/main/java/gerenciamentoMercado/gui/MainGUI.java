@@ -16,6 +16,8 @@ public class MainGUI extends JFrame implements ActionListener{
     private CaixaGUI caixaGUI;
     private LoginGUI loginGUI;
     private ClientesGUI clientesGUI;
+    private FuncionariosGUI funcionariosGUI;
+    private ProdutosGUI produtosGUI;
 
     public MainGUI (BancoDeDados bd){
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -69,6 +71,8 @@ public class MainGUI extends JFrame implements ActionListener{
                 //Inicialização das GUI
                 this.caixaGUI = new CaixaGUI(this, screenSize);
                 this.clientesGUI = new ClientesGUI(this, screenSize);
+                this.funcionariosGUI = new FuncionariosGUI(this, screenSize);
+                this.produtosGUI = new ProdutosGUI(this, screenSize);
 
                 this.setLocation(0, 0); //Centraliza a GUI
                 this.setSize(screenSize); //Aumenta o tamanho para a proxima GUI
@@ -100,6 +104,24 @@ public class MainGUI extends JFrame implements ActionListener{
              */
             this.getContentPane().setVisible(false);
             this.setContentPane(clientesGUI);
+            this.getContentPane().setVisible(true);
+        }
+        
+        else if (e.getActionCommand().equals("FUNCIONARIOS")) {
+        	/*
+            Se o programa entrou no 'if' deve-se trocar a tela para o FuncionariosGUI
+             */
+            this.getContentPane().setVisible(false);
+            this.setContentPane(funcionariosGUI);
+            this.getContentPane().setVisible(true);
+        }
+        
+        else if (e.getActionCommand().equals("ESTOQUE")) {
+        	/*
+            Se o programa entrou no 'if' deve-se trocar a tela para o FuncionariosGUI
+             */
+            this.getContentPane().setVisible(false);
+            this.setContentPane(produtosGUI);
             this.getContentPane().setVisible(true);
         }
 

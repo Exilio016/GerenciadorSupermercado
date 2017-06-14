@@ -5,6 +5,7 @@ import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
 import gerenciamentoMercado.gui.abstractGUI.TableGUI;
 import gerenciamentoMercado.produto.Produto;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.security.spec.ECField;
 
@@ -33,19 +34,22 @@ public class InserirProdutoGUI extends InserirGUI{
         try{
             codigo = Integer.parseInt(codigoStr);
         }catch (Exception ex){
-            codigo = 0;
+            JOptionPane.showMessageDialog(this, "'Código' deve ser um número inteiro!");
+            return;
         }
 
         try{
             quantidade = Integer.parseInt(quantidadeStr);
         }catch (Exception ex){
-            quantidade = 0;
+            JOptionPane.showMessageDialog(this, "'Quantidade' deve ser um número inteiro!");
+            return;
         }
 
         try{
             valor = Float.parseFloat(valorStr);
         }catch (Exception ex){
-            valor = 0;
+            JOptionPane.showMessageDialog(this, "'Valor unitário' deve ser um número real!\nAtenção: não use vírgula(,) use ponto(.)");
+            return;
         }
 
         Produto produto = new Produto(quantidade, valor, "", marca, descricao, codigo);

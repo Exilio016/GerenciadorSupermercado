@@ -4,6 +4,7 @@ import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
 import gerenciamentoMercado.pessoa.Cliente;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -39,7 +40,8 @@ public class InserirClientesGUI extends InserirGUI{
         try{
             numero = Integer.parseInt(numeroStr);
         }catch (Exception ex){
-            numero = 0;
+            JOptionPane.showMessageDialog(this, "'Número' deve ser um número inteiro!");
+            return;
         }
 
         Cliente cliente = new Cliente(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, cartao, nome);

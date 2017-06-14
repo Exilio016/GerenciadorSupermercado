@@ -4,6 +4,7 @@ import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
 import gerenciamentoMercado.pessoa.Funcionario;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -40,14 +41,16 @@ public class InserirFuncionariosGUI extends InserirGUI {
         try{
             numero = Integer.parseInt(numeroStr);
         }catch (Exception ex){
-            numero = 0;
+            JOptionPane.showMessageDialog(this, "'Número' deve ser um número inteiro!");
+            return;
         }
 
         float salario;
         try{
             salario = Float.parseFloat(salarioStr);
         }catch (Exception ex){
-            salario = 0;
+            JOptionPane.showMessageDialog(this, "'Salário' deve ser um número real!\nAtenção: não use vírgula(,) use ponto(.)");
+            return;
         }
 
         int cargo = Funcionario.parseCargo(cargoStr);

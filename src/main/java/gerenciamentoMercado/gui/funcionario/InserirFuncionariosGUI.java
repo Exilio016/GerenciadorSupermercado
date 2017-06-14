@@ -3,6 +3,7 @@ package gerenciamentoMercado.gui.funcionario;
 import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
 import gerenciamentoMercado.pessoa.Funcionario;
+import gerenciamentoMercado.pessoa.Pessoa;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +37,17 @@ public class InserirFuncionariosGUI extends InserirGUI {
         String celular = campos.get(11).getText();
         String salarioStr = campos.get(12).getText();
         String cargoStr = campos.get(13).getText();
+
+        if(!Pessoa.verificaCPF(cpf)){
+            JOptionPane.showMessageDialog(this, "CPF inválido!");
+            return;
+        }else{
+            String[] split = cpf.split("\\D");
+            cpf = "";
+            for(String s : split){
+                cpf += s;
+            }
+        }
 
         int numero;
         try{

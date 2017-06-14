@@ -3,9 +3,9 @@ package gerenciamentoMercado.gui.cliente;
 import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
 import gerenciamentoMercado.pessoa.Cliente;
+import gerenciamentoMercado.pessoa.Pessoa;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -35,6 +35,17 @@ public class InserirClientesGUI extends InserirGUI{
         String telefone = campos.get(10).getText();
         String celular = campos.get(11).getText();
         String cartao = campos.get(12).getText();
+
+        if(!Pessoa.verificaCPF(cpf)){
+            JOptionPane.showMessageDialog(this, "CPF inválido!");
+            return;
+        }else{
+            String[] split = cpf.split("\\D");
+            cpf = "";
+            for(String s : split){
+                cpf += s;
+            }
+        }
 
         int numero;
         try{

@@ -66,7 +66,7 @@ public abstract class Pessoa{
 			for (int i = 0; i < sub.length; i++)
 				numerocpf += sub[i];
 			if (numerocpf.length() != 11) return false;
-			
+
 			for (int i = 0; i < digitos.length; i++)
 				digitos[i] = Integer.parseInt(numerocpf.substring(i, i+1));
 			

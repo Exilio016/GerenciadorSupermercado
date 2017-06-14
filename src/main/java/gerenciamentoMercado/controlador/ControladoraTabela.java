@@ -25,6 +25,7 @@ public class ControladoraTabela implements ActionListener{
     private final BancoDeDados bd;
 
     private static final int COLUNA_CPF = 1;
+    private static final int COLUNA_CODIGO = 2;
 
     public ControladoraTabela(MainGUI frame, TableGUI panel){
         this.frame = frame;
@@ -35,12 +36,29 @@ public class ControladoraTabela implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("REMOVER")){
             int linha = panel.getTabela().getSelectedRow();
-            if(panel instanceof ClientesGUI && linha >= 0) {
+            if((panel instanceof ClientesGUI || panel instanceof FuncionariosGUI)&& linha >= 0) {
                 String cpf = (String) panel.getTabela().getValueAt(linha, COLUNA_CPF);
 
                 if (JOptionPane.showConfirmDialog(panel, "Deseja remover o cliente: " + cpf + "?\n") == JOptionPane.OK_OPTION) {
-                    bd.removerCliente(cpf);
+                    if(panel instanceof ClientesGUI)
+                        bd.removerCliente(cpf);
+                    else
+                        bd.removerFuncionario(cpf);
+
                     panel.atualizarTabela();
+                }
+            }
+            else if(panel instanceof ProdutosGUI && linha >= 0){
+                try{
+                    int codigo = (Integer) panel.getTabela().getValueAt(linha, COLUNA_CODIGO);
+
+                    if(JOptionPane.showConfirmDialog(panel, "Deseja remover o produto: " + codigo + "?\n") == JOptionPane.OK_OPTION){
+                        bd.removerProduto(codigo);
+                        panel.atualizarTabela();
+                    }
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(panel, "Código inválido!");
                 }
             }
         }

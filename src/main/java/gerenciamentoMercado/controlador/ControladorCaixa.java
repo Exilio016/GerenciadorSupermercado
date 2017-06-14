@@ -3,6 +3,8 @@ package gerenciamentoMercado.controlador;
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
 import gerenciamentoMercado.gui.caixa.CaixaGUI;
 import gerenciamentoMercado.gui.MainGUI;
+import gerenciamentoMercado.pessoa.Cliente;
+import gerenciamentoMercado.pessoa.Pessoa;
 import gerenciamentoMercado.produto.Produto;
 
 import javax.swing.*;
@@ -20,6 +22,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     private String cpf;
     private boolean primeira_execução = true;
     private float valor_final = 0;
+    private float desconto = 0;
     private ArrayList<Produto> produtos = new ArrayList<Produto>();
 
     private static final int REMOCAO_OP = -1;
@@ -32,7 +35,6 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
         if(e.getActionCommand().equals("COMPUTAR_PRODUTO")){
             /*
              * O Programe executa esse 'if' sempre que for apertado ENTER na barra 'Codigo do Produto' da CaixaGUI
@@ -45,7 +47,23 @@ public class ControladorCaixa implements ActionListener, KeyListener{
 
             if(primeira_execução){
                 this.cpf = JOptionPane.showInputDialog(panel, "Digite o cpf:\n");
-                panel.getProdutos().setText("CPF: "+ cpf + "\n");
+
+                if(!Pessoa.verificaCPF(cpf)){
+                    cpf = null;
+                }else{
+                    String[] split = cpf.split("\\D");
+                    cpf = "";
+                    for(String s : split){
+                        cpf += s;
+                    }
+                }
+                Cliente c = bd.procurarCliente(cpf);
+                panel.getProdutos().setText("CPF: " + cpf + "\n");
+
+                if(c != null){
+                    panel.getProdutos().setText(panel.getProdutos().getText() + "Cliente VIP!! - Compra com " + c.getDesconto()*100 +"% de desconto!\n");
+                    desconto = c.getDesconto();
+                }
                 primeira_execução = false;
             }
 
@@ -76,13 +94,13 @@ public class ControladorCaixa implements ActionListener, KeyListener{
                 }
 
                 atualizarProdutosArea(p, quantidade, ControladorCaixa.ADICAO_OP);
-                panel.getValorTotal().setText(Float.toString(valor_final));
+                panel.getValorTotal().setText(Float.toString(valor_final - valor_final * desconto));
 
             }
         }
 
         else if(e.getActionCommand().equals("FINALIZAR_COMPRA")){
-            float valor_compra = valor_final;
+            float valor_compra = valor_final - valor_final * desconto;
             String notaFiscal = panel.getProdutos().getText();
 
             //TODO ir para a GUI de finalizar compra
@@ -182,13 +200,29 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     private void resetarGUI(){
         this.valor_final = 0;
         this.produtos.clear();
-        this.cpf = JOptionPane.showInputDialog(panel,"Digite o cpf:\n");
+        this.cpf = JOptionPane.showInputDialog(panel, "Digite o cpf:\n");
+
+        if(!Pessoa.verificaCPF(cpf)){
+            cpf = null;
+        }else{
+            String[] split = cpf.split("\\D");
+            cpf = "";
+            for(String s : split){
+                cpf += s;
+            }
+        }
+        Cliente c = bd.procurarCliente(cpf);
+        panel.getProdutos().setText("CPF: " + cpf + "\n");
+
+        if(c != null){
+            panel.getProdutos().setText(panel.getProdutos().getText() + "Cliente VIP!! - Compra com " + c.getDesconto()*100 +"% de desconto!\n");
+            desconto = c.getDesconto();
+        }
 
         panel.getValorTotal().setText("");
         panel.getCodigoProduto().setText("");
         panel.getDescricaoProduto().setText("");
         panel.getValorProduto().setText("");
-        panel.getProdutos().setText("CPF: " + this.cpf + "\n");
         panel.getQuantidadeProduto().setText("1");
     }
 

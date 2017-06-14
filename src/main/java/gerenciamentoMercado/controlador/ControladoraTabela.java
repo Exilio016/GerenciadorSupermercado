@@ -7,6 +7,7 @@ import gerenciamentoMercado.gui.cliente.ClientesGUI;
 import gerenciamentoMercado.gui.cliente.InserirClientesGUI;
 import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 import gerenciamentoMercado.gui.funcionario.InserirFuncionariosGUI;
+import gerenciamentoMercado.gui.produto.InserirProdutoGUI;
 import gerenciamentoMercado.gui.produto.ProdutosGUI;
 
 import javax.swing.*;
@@ -53,9 +54,10 @@ public class ControladoraTabela implements ActionListener{
             else if (panel instanceof FuncionariosGUI){
                 frame.setContentPane(new InserirFuncionariosGUI(frame, (FuncionariosGUI) panel));
             }
+            else if(panel instanceof ProdutosGUI)
+                frame.setContentPane(new InserirProdutoGUI(frame, (ProdutosGUI) panel));
 
             frame.getContentPane().setVisible(true);
-
         }
 
         else if(e.getActionCommand().equals("BUSCAR")){

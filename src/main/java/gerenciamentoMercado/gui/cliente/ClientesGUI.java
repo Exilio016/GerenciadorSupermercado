@@ -1,6 +1,8 @@
-package gerenciamentoMercado.gui;
+package gerenciamentoMercado.gui.cliente;
 
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
+import gerenciamentoMercado.gui.MainGUI;
+import gerenciamentoMercado.gui.abstractGUI.TableGUI;
 import gerenciamentoMercado.pessoa.Cliente;
 import gerenciamentoMercado.pessoa.Endereco;
 

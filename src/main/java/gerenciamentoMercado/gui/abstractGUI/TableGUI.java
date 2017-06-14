@@ -1,7 +1,8 @@
-package gerenciamentoMercado.gui;
+package gerenciamentoMercado.gui.abstractGUI;
 
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
 import gerenciamentoMercado.controlador.ControladoraTabela;
+import gerenciamentoMercado.gui.MainGUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

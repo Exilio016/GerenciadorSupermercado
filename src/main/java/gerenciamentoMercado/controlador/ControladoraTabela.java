@@ -2,7 +2,9 @@ package gerenciamentoMercado.controlador;
 
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
 import gerenciamentoMercado.gui.*;
-import gerenciamentoMercado.pessoa.Cliente;
+import gerenciamentoMercado.gui.abstractGUI.TableGUI;
+import gerenciamentoMercado.gui.cliente.ClientesGUI;
+import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

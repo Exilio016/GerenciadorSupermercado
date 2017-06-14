@@ -1,6 +1,8 @@
 package gerenciamentoMercado.gui;
 
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
+import gerenciamentoMercado.gui.cliente.ClientesGUI;
+import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 
 import javax.swing.*;
 import java.awt.*;

@@ -7,16 +7,23 @@ import gerenciamentoMercado.gui.MainGUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Vector;
 
 /**
  * Created by nding on 14/06/2017.
  */
-public abstract class InserirGUI extends JPanel{
-    private Vector<JTextField> campos = new Vector<JTextField>();
+public abstract class InserirGUI extends JPanel implements ActionListener{
+    protected Vector<JTextField> campos = new Vector<JTextField>();
+    protected MainGUI frame;
+    protected TableGUI tableGUI;
+    private JButton inserir = new JButton("Inserir");
 
-    public InserirGUI(MainGUI frame, Dimension screenSize){
+    public InserirGUI(MainGUI frame, TableGUI tableGUI){
+        this.frame = frame;
+        this.tableGUI = tableGUI;
+
         this.setLayout(new BorderLayout());
 
         JPanel centro = new JPanel();
@@ -43,9 +50,13 @@ public abstract class InserirGUI extends JPanel{
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
 
+        JPanel sul = new JPanel();
+        sul.add(inserir);
+        inserir.addActionListener(this);
+
         this.add(centro, BorderLayout.CENTER);
         this.add(new JPanel(), BorderLayout.NORTH);
-        this.add(new JPanel(), BorderLayout.SOUTH);
+        this.add(sul, BorderLayout.SOUTH);
         this.add(new JPanel(), BorderLayout.EAST);
         this.add(new JPanel(), BorderLayout.WEST);
 
@@ -53,12 +64,4 @@ public abstract class InserirGUI extends JPanel{
 
     protected abstract String[] criarLabels();
 
-    public static void main(String[] args) throws SQLException {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,600);
-        frame.setContentPane(new InserirFuncionariosGUI(new MainGUI(new BancoDeDados()), new Dimension(800, 600)));
-        frame.setVisible(true);
-
-    }
 }

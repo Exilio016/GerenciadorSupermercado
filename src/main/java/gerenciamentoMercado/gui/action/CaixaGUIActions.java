@@ -1,7 +1,7 @@
 package gerenciamentoMercado.gui.action;
 
 import gerenciamentoMercado.controlador.ControladorCaixa;
-import gerenciamentoMercado.gui.CaixaGUI;
+import gerenciamentoMercado.gui.caixa.CaixaGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

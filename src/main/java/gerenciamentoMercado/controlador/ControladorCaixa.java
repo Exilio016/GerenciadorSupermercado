@@ -1,7 +1,7 @@
 package gerenciamentoMercado.controlador;
 
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
-import gerenciamentoMercado.gui.CaixaGUI;
+import gerenciamentoMercado.gui.caixa.CaixaGUI;
 import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.produto.Produto;
 

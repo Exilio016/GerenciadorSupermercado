@@ -34,4 +34,13 @@ public class Funcionario extends Pessoa{
 	public void setCargo(int cargo) {
 		this.cargo = cargo;
 	}
+
+    public static int parseCargo(String cargo) {
+		if(cargo.toLowerCase().equals("gerente"))
+			return 2;
+		else if(cargo.toLowerCase().equals("supervisor"))
+			return 1;
+		else
+			return 0;
+    }
 }

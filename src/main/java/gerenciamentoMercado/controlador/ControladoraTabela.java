@@ -4,7 +4,10 @@ import gerenciamentoMercado.bancoDeDados.BancoDeDados;
 import gerenciamentoMercado.gui.*;
 import gerenciamentoMercado.gui.abstractGUI.TableGUI;
 import gerenciamentoMercado.gui.cliente.ClientesGUI;
+import gerenciamentoMercado.gui.cliente.InserirClientesGUI;
 import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
+import gerenciamentoMercado.gui.funcionario.InserirFuncionariosGUI;
+import gerenciamentoMercado.gui.produto.ProdutosGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -42,6 +45,16 @@ public class ControladoraTabela implements ActionListener{
         }
 
         else if(e.getActionCommand().equals("INSERIR")){
+            frame.getContentPane().setVisible(false);
+
+            if(panel instanceof ClientesGUI){
+                frame.setContentPane(new InserirClientesGUI(frame, (ClientesGUI) panel));
+            }
+            else if (panel instanceof FuncionariosGUI){
+                frame.setContentPane(new InserirFuncionariosGUI(frame, (FuncionariosGUI) panel));
+            }
+
+            frame.getContentPane().setVisible(true);
 
         }
 

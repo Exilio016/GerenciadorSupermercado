@@ -6,6 +6,9 @@ import gerenciamentoMercado.gui.abstractGUI.TableGUI;
 import gerenciamentoMercado.gui.cliente.ClientesGUI;
 import gerenciamentoMercado.gui.cliente.EditarClientesGUI;
 import gerenciamentoMercado.gui.cliente.InserirClientesGUI;
+import gerenciamentoMercado.gui.contas.ContasGUI;
+import gerenciamentoMercado.gui.contas.EditarContasGUI;
+import gerenciamentoMercado.gui.contas.InserirContasGUI;
 import gerenciamentoMercado.gui.funcionario.EditarFuncionariosGUI;
 import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 import gerenciamentoMercado.gui.funcionario.InserirFuncionariosGUI;
@@ -29,6 +32,7 @@ public class ControladoraTabela implements ActionListener{
 
     private static final int COLUNA_CPF = 1;
     private static final int COLUNA_CODIGO = 2;
+    private static final int COLUNA_USUARIO = 1;
 
     public ControladoraTabela(MainGUI frame, TableGUI panel){
         this.frame = frame;
@@ -64,6 +68,15 @@ public class ControladoraTabela implements ActionListener{
                     JOptionPane.showMessageDialog(panel, "Código inválido!");
                 }
             }
+
+            else if(panel instanceof  ContasGUI && linha > 0){
+                String usuario = (String) panel.getTabela().getValueAt(linha, COLUNA_USUARIO);
+
+                if(JOptionPane.showConfirmDialog(panel, "Deseja remover o usuário: " + usuario) == JOptionPane.OK_OPTION){
+                    bd.removerConta(usuario);
+                    panel.atualizarTabela();
+                }
+            }
         }
 
         else if(e.getActionCommand().equals("INSERIR")){
@@ -77,6 +90,9 @@ public class ControladoraTabela implements ActionListener{
             }
             else if(panel instanceof ProdutosGUI)
                 frame.setContentPane(new InserirProdutoGUI(frame, (ProdutosGUI) panel));
+
+            else if(panel instanceof ContasGUI)
+                frame.setContentPane(new InserirContasGUI(frame, (ContasGUI) panel));
 
             frame.getContentPane().setVisible(true);
         }
@@ -120,6 +136,9 @@ public class ControladoraTabela implements ActionListener{
 
            else if (panel instanceof FuncionariosGUI)
                frame.setContentPane(new EditarFuncionariosGUI(frame, (FuncionariosGUI) panel, panel.getTabela(), linha));
+
+           else if(panel instanceof  ContasGUI)
+               frame.setContentPane(new EditarContasGUI(frame, (ContasGUI) panel, panel.getTabela(), linha));
 
 
         }

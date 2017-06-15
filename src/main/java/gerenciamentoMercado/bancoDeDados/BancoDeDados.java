@@ -1,6 +1,7 @@
 package gerenciamentoMercado.bancoDeDados;
 
 import gerenciamentoMercado.pessoa.Cliente;
+import gerenciamentoMercado.pessoa.Conta;
 import gerenciamentoMercado.produto.Produto;
 import gerenciamentoMercado.pessoa.Funcionario;
 
@@ -50,7 +51,7 @@ public class BancoDeDados {
 
         //Se o banco de dados estiver vazio, cria-se as tabelas do programa
         try {
-            String sql = "CREATE TABLE Conta (cpf VARCHAR(11), usuario VARCHAR(25), senha VARCHAR(25), PRIMARY KEY (usuario))";
+            String sql = "CREATE TABLE Conta (cpf VARCHAR(11), usuario VARCHAR(25), senha VARCHAR(25), email VARCHAR (50), PRIMARY KEY (usuario))";
 
             stmt = conn.prepareStatement(sql);//Se nao existir, cria a tabela produtos
             stmt.execute();
@@ -200,6 +201,25 @@ public class BancoDeDados {
             return false;
         }
 
+    }
+
+    public void adicionarConta(Conta conta){
+        String sql = "INSERT INTO Conta (cpf, usuario, senha, email) VALUES (?, ?, ?, ?)";
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, conta.getCpf());
+            stmt.setString(2, conta.getUsuario());
+            stmt.setString(3, conta.getSenha());
+            stmt.setString(4, conta.getEmail());
+
+            stmt.execute();
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public void adicionarProduto(Produto produto){
@@ -431,5 +451,49 @@ public class BancoDeDados {
         }
 
         return funcionarios;
+    }
+
+    public Vector<Conta> mostrarContas() {
+        Vector<Conta> contas = new Vector<Conta>();
+
+        String sql = "SELECT * FROM Conta";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet res = stmt.executeQuery();
+
+            while (res.next()){
+                String cpf = res.getString(1);
+                String usuario = res.getString(2);
+                String senha = res.getString(3);
+                String email = res.getString(4);
+
+
+                contas.add(new Conta(cpf, usuario, senha, email));
+            }
+
+            stmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return contas;
+
+    }
+
+    public void removerConta(String usuario){
+        String sql = "DELETE FROM Conta WHERE usuario = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, usuario);
+
+            stmt.execute();
+            stmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

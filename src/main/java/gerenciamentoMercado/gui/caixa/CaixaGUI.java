@@ -110,6 +110,7 @@ public class CaixaGUI extends JPanel{
 		cancelar.addActionListener(controladorCaixa);
 
 		fechar.setText("Fechar caixa - F4");
+		fechar.addActionListener(controladorCaixa);
 		fechar.setActionCommand("FECHAR_CAIXA");
 	}
 

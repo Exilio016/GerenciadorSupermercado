@@ -3,6 +3,7 @@ package gerenciamentoMercado.gui;
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
 import gerenciamentoMercado.gui.caixa.CaixaGUI;
 import gerenciamentoMercado.gui.cliente.ClientesGUI;
+import gerenciamentoMercado.gui.contas.ContasGUI;
 import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 import gerenciamentoMercado.gui.produto.ProdutosGUI;
 
@@ -22,6 +23,7 @@ public class MainGUI extends JFrame implements ActionListener{
     private ClientesGUI clientesGUI;
     private FuncionariosGUI funcionariosGUI;
     private ProdutosGUI produtosGUI;
+    private ContasGUI contasGUI;
 
     public MainGUI (BancoDeDados bd){
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -51,10 +53,15 @@ public class MainGUI extends JFrame implements ActionListener{
         funcionarios.setActionCommand("FUNCIONARIOS");
         funcionarios.addActionListener(this);
 
+        JMenuItem contas = new JMenuItem("| Contas");
+        contas.setActionCommand("CONTAS");
+        contas.addActionListener(this);
+
         menuBar.add(caixa);
         menuBar.add(clientes);
         menuBar.add(estoque);
         menuBar.add(funcionarios);
+        menuBar.add(contas);
     }
 
     public static void main(String[] args) throws SQLException {
@@ -64,7 +71,6 @@ public class MainGUI extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
         if(e.getActionCommand().equals("LOGIN")){
         	
             JTextField usuario = ((LoginGUI) this.getContentPane()).getUsuario();
@@ -77,6 +83,7 @@ public class MainGUI extends JFrame implements ActionListener{
                 this.clientesGUI = new ClientesGUI(this, screenSize);
                 this.funcionariosGUI = new FuncionariosGUI(this, screenSize);
                 this.produtosGUI = new ProdutosGUI(this, screenSize);
+                this.contasGUI = new ContasGUI(this, screenSize);
 
                 this.setLocation(0, 0); //Centraliza a GUI
                 this.setSize(screenSize); //Aumenta o tamanho para a proxima GUI
@@ -128,6 +135,17 @@ public class MainGUI extends JFrame implements ActionListener{
             this.setContentPane(produtosGUI);
             this.getContentPane().setVisible(true);
         }
+
+        else if (e.getActionCommand().equals("CONTAS")) {
+        	/*
+            Se o programa entrou no 'if' deve-se trocar a tela para o ContasGUI
+             */
+            this.getContentPane().setVisible(false);
+            this.setContentPane(contasGUI);
+            this.getContentPane().setVisible(true);
+        }
+
+
 
     }
 

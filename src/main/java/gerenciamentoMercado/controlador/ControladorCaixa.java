@@ -1,6 +1,7 @@
 package gerenciamentoMercado.controlador;
 
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
+import gerenciamentoMercado.gui.LoginGUI;
 import gerenciamentoMercado.gui.caixa.CaixaGUI;
 import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.pessoa.Cliente;
@@ -163,8 +164,15 @@ public class ControladorCaixa implements ActionListener, KeyListener{
                 }
 
             }
+        }
 
+        else if(e.getActionCommand().equals("FECHAR_CAIXA")){
+            frame.setSize(400, 400);
+            panel.setVisible(false);
 
+            frame.setContentPane(new LoginGUI(frame));
+            frame.setJMenuBar(null);
+            frame.getContentPane().setVisible(true);
         }
     }
 

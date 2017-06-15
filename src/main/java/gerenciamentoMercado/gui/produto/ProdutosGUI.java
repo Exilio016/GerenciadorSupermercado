@@ -19,6 +19,10 @@ public class ProdutosGUI extends TableGUI {
         super(frame, screenSize);
     }
 
+    protected JLabel criarGUILabel() {
+        return new JLabel("Estoque");
+    }
+
     @Override
     protected void criarTabela(){
         DefaultTableModel modeloTabela = getModeloTabela();

@@ -20,6 +20,10 @@ public class FuncionariosGUI extends TableGUI {
         super(frame, screenSize);
     }
 
+    protected JLabel criarGUILabel() {
+        return new JLabel("Funcionarios");
+    }
+
     @Override
     protected void criarTabela(){
         DefaultTableModel modeloTabela = getModeloTabela();

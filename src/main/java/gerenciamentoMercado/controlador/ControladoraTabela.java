@@ -4,9 +4,12 @@ import gerenciamentoMercado.bancoDeDados.BancoDeDados;
 import gerenciamentoMercado.gui.*;
 import gerenciamentoMercado.gui.abstractGUI.TableGUI;
 import gerenciamentoMercado.gui.cliente.ClientesGUI;
+import gerenciamentoMercado.gui.cliente.EditarClientesGUI;
 import gerenciamentoMercado.gui.cliente.InserirClientesGUI;
+import gerenciamentoMercado.gui.funcionario.EditarFuncionariosGUI;
 import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 import gerenciamentoMercado.gui.funcionario.InserirFuncionariosGUI;
+import gerenciamentoMercado.gui.produto.EditarProdutoGUI;
 import gerenciamentoMercado.gui.produto.InserirProdutoGUI;
 import gerenciamentoMercado.gui.produto.ProdutosGUI;
 
@@ -100,6 +103,25 @@ public class ControladoraTabela implements ActionListener{
                 panel.atualizarTabela();
             else
                 panel.atualizarTabela(resultado);
+        }
+
+        else if(e.getActionCommand().equals("EDITAR")){
+            int linha = panel.getTabela().getSelectedRow();
+
+            if(linha < 0)
+                return;
+            frame.getContentPane().setVisible(false);
+
+            if(panel instanceof ClientesGUI)
+                frame.setContentPane(new EditarClientesGUI(frame, (ClientesGUI) panel, panel.getTabela(), linha));
+
+           else if(panel instanceof ProdutosGUI)
+                frame.setContentPane(new EditarProdutoGUI(frame, (ProdutosGUI) panel, panel.getTabela(), linha));
+
+           else if (panel instanceof FuncionariosGUI)
+               frame.setContentPane(new EditarFuncionariosGUI(frame, (FuncionariosGUI) panel, panel.getTabela(), linha));
+
+
         }
     }
 }

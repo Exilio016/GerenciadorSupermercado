@@ -20,10 +20,15 @@ public class ClientesGUI extends TableGUI {
         super(frame, screenSize);
     }
 
+    protected JLabel criarGUILabel() {
+        return new JLabel("Clientes");
+    }
+
     @Override
     protected void criarTabela(){
         DefaultTableModel modeloTabela = getModeloTabela();
         JTable tabela = new JTable(modeloTabela);
+
         modeloTabela.addColumn("Nome");
         modeloTabela.addColumn("CPF");
         modeloTabela.addColumn("RG");

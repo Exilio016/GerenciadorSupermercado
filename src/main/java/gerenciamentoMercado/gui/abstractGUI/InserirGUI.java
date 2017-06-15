@@ -18,7 +18,8 @@ public abstract class InserirGUI extends JPanel implements ActionListener{
     protected Vector<JTextField> campos = new Vector<JTextField>();
     protected MainGUI frame;
     protected TableGUI tableGUI;
-    private JButton inserir = new JButton("Inserir");
+    protected JButton cancelar = new JButton("Cancelar");
+    protected JButton inserir = new JButton("Inserir");
 
     public InserirGUI(MainGUI frame, TableGUI tableGUI){
         this.frame = frame;
@@ -50,9 +51,14 @@ public abstract class InserirGUI extends JPanel implements ActionListener{
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
 
-        JPanel sul = new JPanel();
+        JPanel sul = new JPanel(new FlowLayout());
         sul.add(inserir);
+        sul.add(cancelar);
+
+        cancelar.addActionListener(this);
         inserir.addActionListener(this);
+        inserir.setActionCommand("INSERIR");
+        cancelar.setActionCommand("CANCELAR");
 
         this.add(centro, BorderLayout.CENTER);
         this.add(new JPanel(), BorderLayout.NORTH);

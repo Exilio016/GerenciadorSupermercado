@@ -127,7 +127,7 @@ public class CaixaGUI extends JPanel{
 		inserirPanel.setOpaque(false);
 
 		JLabel titulo = new JLabel("Caixa");
-		titulo.setFont(new Font("titulo", Font.BOLD, 32));
+		//titulo.setFont(new Font("titulo", Font.BOLD, 32));
 		JPanel tituloPanel = new JPanel();
 		tituloPanel.setOpaque(false);
 		tituloPanel.add(titulo);

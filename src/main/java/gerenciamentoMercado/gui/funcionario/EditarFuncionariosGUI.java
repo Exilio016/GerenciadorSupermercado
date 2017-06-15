@@ -1,21 +1,30 @@
 package gerenciamentoMercado.gui.funcionario;
 
+import gerenciamentoMercado.controlador.ControladoraTabela;
 import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
 import gerenciamentoMercado.pessoa.Funcionario;
 import gerenciamentoMercado.pessoa.Pessoa;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
  * Created by nding on 14/06/2017.
  */
-public class InserirFuncionariosGUI extends InserirGUI {
+public class EditarFuncionariosGUI extends InserirGUI {
 
-    public InserirFuncionariosGUI(MainGUI frame, FuncionariosGUI funcionariosGUI) {
+    public EditarFuncionariosGUI(MainGUI frame, FuncionariosGUI funcionariosGUI, JTable tabela, int linha) {
         super(frame, funcionariosGUI);
+
+        for(int i = 0; i < campos.size(); i++){
+            String valor = "" + tabela.getValueAt(linha, i);
+            campos.get(i).setText(valor);
+        }
+
+        campos.get(1).setEditable(false);
+
+        inserir.setText("Editar");
     }
 
     protected String[] criarLabels() {
@@ -39,16 +48,7 @@ public class InserirFuncionariosGUI extends InserirGUI {
             String salarioStr = campos.get(12).getText();
             String cargoStr = campos.get(13).getText();
 
-            if (!Pessoa.verificaCPF(cpf)) {
-                JOptionPane.showMessageDialog(this, "CPF inválido!");
-                return;
-            } else {
-                String[] split = cpf.split("\\D");
-                cpf = "";
-                for (String s : split) {
-                    cpf += s;
-                }
-            }
+            frame.getBanco().removerFuncionario(cpf);
 
             int numero;
             try {

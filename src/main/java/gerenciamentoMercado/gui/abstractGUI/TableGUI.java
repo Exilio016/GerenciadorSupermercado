@@ -30,11 +30,13 @@ public abstract class TableGUI extends JPanel{
     private JTextField campoBusca = new JTextField("");
     private DefaultTableModel modeloTabela = new DefaultTableModel();
     private JTable tabela;
+    private JLabel label;
 
     public TableGUI(MainGUI frame, Dimension screenSize){
         this.frame = frame;
         this.screenSize = screenSize;
         this.bd = frame.getBanco();
+        this.label = criarGUILabel();
 
         this.setLayout(new BorderLayout());
         this.construirNorte();
@@ -43,6 +45,8 @@ public abstract class TableGUI extends JPanel{
         this.construirLeste();
         this.construirOeste();
     }
+
+    protected abstract JLabel criarGUILabel();
 
     public JTable getTabela() {
         return tabela;
@@ -65,6 +69,7 @@ public abstract class TableGUI extends JPanel{
     private void construirNorte(){
         JPanel panel = new JPanel();
         panel.setOpaque(false);
+        panel.add(label);
 
         this.add(panel, BorderLayout.NORTH);
     }

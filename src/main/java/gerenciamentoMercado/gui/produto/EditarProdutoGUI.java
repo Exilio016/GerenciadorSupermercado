@@ -2,19 +2,26 @@ package gerenciamentoMercado.gui.produto;
 
 import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
-import gerenciamentoMercado.gui.abstractGUI.TableGUI;
 import gerenciamentoMercado.produto.Produto;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.security.spec.ECField;
 
 /**
  * Created by nding on 14/06/2017.
  */
-public class InserirProdutoGUI extends InserirGUI{
-    public InserirProdutoGUI(MainGUI frame, ProdutosGUI produtosGUI) {
+public class EditarProdutoGUI extends InserirGUI{
+    public EditarProdutoGUI(MainGUI frame, ProdutosGUI produtosGUI, JTable tabela, int linha) {
         super(frame, produtosGUI);
+
+        for(int i = 0; i < campos.size(); i++){
+            String valor = "" + tabela.getValueAt(linha, i);
+            campos.get(i).setText(valor);
+        }
+
+        campos.get(2).setEditable(false);
+
+        inserir.setText("Editar");
     }
 
     protected String[] criarLabels() {
@@ -38,6 +45,8 @@ public class InserirProdutoGUI extends InserirGUI{
                 JOptionPane.showMessageDialog(this, "'Código' deve ser um número inteiro!");
                 return;
             }
+
+            frame.getBanco().removerProduto(codigo);
 
             try {
                 quantidade = Integer.parseInt(quantidadeStr);

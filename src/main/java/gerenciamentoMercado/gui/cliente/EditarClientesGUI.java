@@ -11,10 +11,20 @@ import java.awt.event.ActionEvent;
 /**
  * Created by nding on 14/06/2017.
  */
-public class InserirClientesGUI extends InserirGUI{
+public class EditarClientesGUI extends InserirGUI{
 
-    public InserirClientesGUI(MainGUI frame, ClientesGUI clientesGUI) {
+    public EditarClientesGUI(MainGUI frame, ClientesGUI clientesGUI, JTable tabela, int linha) {
         super(frame, clientesGUI);
+
+        for(int i = 0; i < campos.size(); i++){
+            String valor = "" + tabela.getValueAt(linha, i);
+            campos.get(i).setText(valor);
+        }
+
+        campos.get(1).setEditable(false);
+
+        inserir.setText("Editar");
+
     }
 
     protected String[] criarLabels() {
@@ -37,16 +47,7 @@ public class InserirClientesGUI extends InserirGUI{
             String celular = campos.get(11).getText();
             String cartao = campos.get(12).getText();
 
-            if (!Pessoa.verificaCPF(cpf)) {
-                JOptionPane.showMessageDialog(this, "CPF inválido!");
-                return;
-            } else {
-                String[] split = cpf.split("\\D");
-                cpf = "";
-                for (String s : split) {
-                    cpf += s;
-                }
-            }
+            frame.getBanco().removerCliente(cpf);
 
             int numero;
             try {

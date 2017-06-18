@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+/**
+ * Classe que representa a janela principal do programa
+ */
 public class MainGUI extends JFrame implements ActionListener{
     private BancoDeDados bd;
     private Dimension screenSize;
@@ -25,6 +28,10 @@ public class MainGUI extends JFrame implements ActionListener{
     private ProdutosGUI produtosGUI;
     private ContasGUI contasGUI;
 
+    /**
+     * Contrutor da classe, que configura a janela inicial do programa
+     * @param bd - BancoDeDados que faz a conexão com o baco do Mercado
+     */
     public MainGUI (BancoDeDados bd){
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(400,400);
@@ -70,6 +77,10 @@ public class MainGUI extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Método que controla os botões da janela inicial e os menus do programa
+     * @param e - ActionEvent dos botões ou menus
+     */
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("LOGIN")){
         	
@@ -151,9 +162,5 @@ public class MainGUI extends JFrame implements ActionListener{
 
     public BancoDeDados getBanco(){
         return bd;
-    }
-
-    public void close(){
-        this.dispose();
     }
 }

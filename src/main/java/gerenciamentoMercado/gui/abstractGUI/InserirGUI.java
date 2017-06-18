@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 /**
- * Created by nding on 14/06/2017.
+ * Classe abstrata que representa uma aba da GUI que contém um formulario de inserção no banco de dados
  */
 public abstract class InserirGUI extends JPanel implements ActionListener{
     protected Vector<JTextField> campos = new Vector<JTextField>();
@@ -21,6 +21,11 @@ public abstract class InserirGUI extends JPanel implements ActionListener{
     protected JButton cancelar = new JButton("Cancelar");
     protected JButton inserir = new JButton("Inserir");
 
+    /**
+     * Contrutor da classe, que cria o formulario
+     * @param frame - MainGUI que contém o formulario
+     * @param tableGUI - TableGUI que requisitou o formulário
+     */
     public InserirGUI(MainGUI frame, TableGUI tableGUI){
         this.frame = frame;
         this.tableGUI = tableGUI;
@@ -68,6 +73,10 @@ public abstract class InserirGUI extends JPanel implements ActionListener{
 
     }
 
+    /**
+     * Método que cria os labels do formulário
+     * @return - String[] com os conteúdos dos labels
+     */
     protected abstract String[] criarLabels();
 
 }

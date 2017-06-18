@@ -106,7 +106,7 @@ public class ControladoraTabela implements ActionListener{
                     int codigo = Integer.parseInt(campo);
                     resultado.add(bd.mostrarProduto(codigo));
                 }catch (Exception ex){
-                    //
+
                 }
             }
             else if (panel instanceof  ClientesGUI)

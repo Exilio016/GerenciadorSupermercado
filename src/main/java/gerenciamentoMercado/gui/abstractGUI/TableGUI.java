@@ -3,28 +3,30 @@ package gerenciamentoMercado.gui.abstractGUI;
 import gerenciamentoMercado.bancoDeDados.BancoDeDados;
 import gerenciamentoMercado.controlador.ControladoraTabela;
 import gerenciamentoMercado.gui.MainGUI;
+import gerenciamentoMercado.gui.action.TableGUIActions;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
 /**
- * Created by nding on 12/06/2017.
+ * Classe abstrata que representa uma aba do programa, que possua uma tabela
  */
 public abstract class TableGUI extends JPanel{
     private MainGUI frame;
     private Dimension screenSize;
     private BancoDeDados bd;
 
-    private JButton inserir = new JButton("Inserir");
-    private JButton remover = new JButton("Remover");
-    private JButton editar = new JButton("Editar");
-    private JButton buscar = new JButton("Buscar");
+    private JButton inserir = new JButton("Inserir - F4");
+    private JButton remover = new JButton("Remover - F5");
+    private JButton editar = new JButton("Editar - F6");
+    private JButton buscar = new JButton("Buscar - F7");
 
 
     private JTextField campoBusca = new JTextField("");
@@ -32,6 +34,11 @@ public abstract class TableGUI extends JPanel{
     private JTable tabela;
     private JLabel label;
 
+    /**
+     * Contrutor da classe que configura a GUI
+     * @param frame - MainGUI que contém a instancia dessa classe
+     * @param screenSize - Dimension que contém o tamanho da tela
+     */
     public TableGUI(MainGUI frame, Dimension screenSize){
         this.frame = frame;
         this.screenSize = screenSize;
@@ -46,12 +53,19 @@ public abstract class TableGUI extends JPanel{
         this.construirOeste();
     }
 
+    /**
+     * Método que cria um JLabel com o nome da aba
+     * @return - JLabel com o nome da aba
+     */
     protected abstract JLabel criarGUILabel();
 
     public JTable getTabela() {
         return tabela;
     }
 
+    /**
+     * Método que constroi a borda oeste da GUI dessa aba
+     */
     private void construirOeste() {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
@@ -59,6 +73,9 @@ public abstract class TableGUI extends JPanel{
         this.add(panel, BorderLayout.WEST);
     }
 
+    /**
+     * Método que constroi a borda leste da GUI dessa aba
+     */
     private void construirLeste() {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
@@ -66,6 +83,9 @@ public abstract class TableGUI extends JPanel{
         this.add(panel, BorderLayout.EAST);
     }
 
+    /**
+     * Método que constroi a borda norte da GUI dessa aba
+     */
     private void construirNorte(){
         JPanel panel = new JPanel();
         panel.setOpaque(false);
@@ -74,6 +94,9 @@ public abstract class TableGUI extends JPanel{
         this.add(panel, BorderLayout.NORTH);
     }
 
+    /**
+     * Método que constroi a borda sul da GUI dessa aba
+     */
     private void construirSul() {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
@@ -81,6 +104,11 @@ public abstract class TableGUI extends JPanel{
         this.add(panel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Método que constroi o centro da GUI dessa aba,
+     * com uma tabela que contem as informações armazenadas no banco.
+     * E configura os listeners dos botões contidos no centro
+     */
     private void construirCentro(){
     	ControladoraTabela controlador = new ControladoraTabela(frame, this);
     	
@@ -108,6 +136,8 @@ public abstract class TableGUI extends JPanel{
         remover.addActionListener(controlador);
         editar.addActionListener(controlador);
         buscar.addActionListener(controlador);
+
+        gerarKeyMap(controlador);
         
         campoBusca.setPreferredSize(new Dimension(200, 20));
 
@@ -115,10 +145,38 @@ public abstract class TableGUI extends JPanel{
 
     }
 
+    /**
+     * Método que gera os atalhos do teclado
+     */
+    private void gerarKeyMap(ControladoraTabela controladorTabela){
+        InputMap imap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap amap = this.getActionMap();
+
+        amap.put("INSERIR", new TableGUIActions(this, controladorTabela, "INSERIR"));
+        amap.put("REMOVER", new TableGUIActions(this, controladorTabela, "REMOVER"));
+        amap.put("EDITAR", new TableGUIActions(this, controladorTabela, "EDITAR"));
+        amap.put("BUSCAR", new TableGUIActions(this, controladorTabela, "BUSCAR"));
+
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "INSERIR");
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "REMOVER");
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0), "EDITAR");
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0), "BUSCAR");
+    }
+
+    /**
+     * Método que controi a tabela na GUI dessa aba
+     */
     protected abstract void criarTabela();
 
+    /**
+     * Método que atualiza a tabela, adicionando as informações armazenadas no banco de dados
+     */
     public abstract void atualizarTabela();
 
+    /**
+     * Método que atualiza a tabela, adicionando as informações passadas através de um Vector
+     * @param conteudo - Vector com os objetos a serem adicionados na tabela
+     */
     public abstract void atualizarTabela(Vector conteudo);
 
     @Override
@@ -149,20 +207,8 @@ public abstract class TableGUI extends JPanel{
         this.frame = frame;
     }
 
-    protected Dimension getScreenSize() {
-        return screenSize;
-    }
-
-    protected void setScreenSize(Dimension screenSize) {
-        this.screenSize = screenSize;
-    }
-
     protected BancoDeDados getBd() {
         return bd;
-    }
-
-    protected void setBd(BancoDeDados bd) {
-        this.bd = bd;
     }
 
     protected JButton getInserir() {
@@ -173,28 +219,8 @@ public abstract class TableGUI extends JPanel{
         this.inserir = inserir;
     }
 
-    protected JButton getRemover() {
-        return remover;
-    }
-
-    protected void setRemover(JButton remover) {
-        this.remover = remover;
-    }
-
-    protected JButton getEditar() {
-        return editar;
-    }
-
-    protected void setEditar(JButton editar) {
-        this.editar = editar;
-    }
-
     protected DefaultTableModel getModeloTabela() {
         return modeloTabela;
-    }
-
-    protected void setModeloTabela(DefaultTableModel modeloTabela) {
-        this.modeloTabela = modeloTabela;
     }
 
     protected void setTabela(JTable tabela) {

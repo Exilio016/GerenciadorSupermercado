@@ -13,6 +13,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * Classe que representa a aba do caixa do supermercado
+ */
 public class CaixaGUI extends JPanel{
 	private JTextField codigoProduto = new JTextField();
 	private JTextField descricaoProduto = new JTextField();
@@ -65,6 +68,11 @@ public class CaixaGUI extends JPanel{
 		return fechar;
 	}
 
+	/**
+	 * Contrutor da classe que configura a GUI e os listeners dos botões
+	 * @param frame - MainGUI que contem o objeto dessa classe
+	 * @param screenSize - Dimension que contem o tamanho da tela
+	 */
 	public CaixaGUI(MainGUI frame, Dimension screenSize){
 		ControladorCaixa controladorCaixa = new ControladorCaixa(frame, this);
 
@@ -174,6 +182,9 @@ public class CaixaGUI extends JPanel{
 		this.add(inserirPanel, BorderLayout.NORTH);
 	}
 
+	/**
+	 * Método que configura o centro da GUI dessa aba
+	 */
 	private void construirCentro(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -195,6 +206,9 @@ public class CaixaGUI extends JPanel{
 		this.add(panel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Método que configura a borda leste da GUI dessa aba
+	 */
 	private void construirLeste(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4, 1));
@@ -226,6 +240,10 @@ public class CaixaGUI extends JPanel{
 
 	}
 
+	/**
+	 * Método que gera os atalhos do teclado dessa aba
+	 * @param controladorCaixa - Classe que contem o actionListener para os botões dessa GUI
+	 */
 	private void gerarKeyMap(ControladorCaixa controladorCaixa){
 		InputMap imap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap amap = this.getActionMap();

@@ -43,4 +43,12 @@ public class Funcionario extends Pessoa{
 		else
 			return 0;
     }
+
+    public static String cargoToString (int cargo){
+		if(cargo == 1)
+			return "Supervisor";
+		if(cargo == 2)
+			return "Gerente";
+		return "Outro";
+	}
 }

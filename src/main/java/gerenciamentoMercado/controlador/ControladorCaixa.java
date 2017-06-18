@@ -16,6 +16,9 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Classe que controla o caixa, como listener dos eventos de CaixaGUI
+ */
 public class ControladorCaixa implements ActionListener, KeyListener{
     private MainGUI frame;
     private CaixaGUI panel;
@@ -29,6 +32,10 @@ public class ControladorCaixa implements ActionListener, KeyListener{
     private static final int REMOCAO_OP = -1;
     private static final int ADICAO_OP = 1;
 
+    /**
+     * @param frame - MainGUI que contem panel
+     * @param panel - CaixaGUI que é a origem dos ActionEvents tratados pela classe
+     */
     public ControladorCaixa(MainGUI frame, CaixaGUI panel){
         this.frame = frame;
         this.panel = panel;
@@ -133,7 +140,6 @@ public class ControladorCaixa implements ActionListener, KeyListener{
             }
 
             if(quantidadeRemovida > 0) {
-                //TODO Consertar erro
                 Produto p = null;
                 Iterator<Produto> it = produtos.iterator();
 

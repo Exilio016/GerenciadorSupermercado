@@ -60,7 +60,7 @@ public class FuncionariosGUI extends TableGUI {
             Endereco e = f.getEnd();
             modeloTabela.addRow(new Object[]{f.getNome(), f.getCPF(), f.getRG(),
                     e.getCEP(), e.getEstado(), e.getCidade(), e.getBairro(), e.getRua(), e.getNumero(), e.getComplemento(),
-                    f.getTelefone(), f.getCelular(), f.getSalario(), f.getCargo()});
+                    f.getTelefone(), f.getCelular(), f.getSalario(), Funcionario.cargoToString(f.getCargo())});
         }
     }
 

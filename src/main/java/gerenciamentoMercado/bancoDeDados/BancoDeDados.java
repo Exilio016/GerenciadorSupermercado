@@ -8,9 +8,16 @@ import gerenciamentoMercado.pessoa.Funcionario;
 import java.sql.*;
 import java.util.Vector;
 
+/**
+ * Classe que faz a conexão com o banco de dados
+ */
 public class BancoDeDados {
     private Connection conn;
 
+    /**
+     * Contrutor que se conecta ao banco e inicializa as tabelas, se essas não existirem
+     * @throws SQLException - Se ocorrer um erro na conexão com o banco
+     */
     public BancoDeDados() throws SQLException {
         String driver = "jdbc:derby:./Data/database;create=true"; //Conecta no banco local da maquina
         conn = DriverManager.getConnection(driver);
@@ -67,6 +74,11 @@ public class BancoDeDados {
         }
     }
 
+    /**
+     * Método que busca um Cliente no banco de dados
+     * @param cpf - String com o cpf do cliente
+     * @return Cliente encontrado no banco, ou null se não existir
+     */
     public Cliente procurarCliente(String cpf) {
         Cliente ret = null;
         String sql = "SELECT * FROM Cliente WHERE cpf=?";
@@ -103,6 +115,11 @@ public class BancoDeDados {
         return ret;
     }
 
+
+    /**
+     * Método que adiciona um cliente no banco
+     * @param cliente - Cliente a ser adicionado
+     */
     public void adicionarCliente(Cliente cliente){
         if(cliente != null){
             String sql = "INSERT INTO Cliente (nome, cpf, rg, cep, estado, cidade, bairro, rua, numero, complemento, telefone, celular, cartao) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -134,6 +151,10 @@ public class BancoDeDados {
         }
     }
 
+    /**
+     * Método que remove um Cliente do banco
+     * @param cpf - String com o cpf do cliente a ser removido
+     */
     public void removerCliente(String cpf){
         String sql = "DELETE FROM Cliente WHERE cpf = ?";
 
@@ -148,6 +169,10 @@ public class BancoDeDados {
         }
     }
 
+    /**
+     * Método que retorna todos os clientes do banco de dados
+     * @return - Vector de Clientes armazenados no banco
+     */
     public Vector<Cliente> mostrarClientes(){
         Vector<Cliente> clientes = new Vector<Cliente>();
 
@@ -184,6 +209,12 @@ public class BancoDeDados {
         return clientes;
     }
 
+    /**
+     * Método que realiza um login, de acordo com a tabela Conta armazenada no banco de dados
+     * @param usuario - String com o usuario
+     * @param senha - String com a senha
+     * @return - true se existirem o usuario e senha no banco de dados
+     */
     public boolean logar(String usuario, String senha){
         String sql = "SELECT * FROM Conta WHERE usuario = ?";
 
@@ -203,6 +234,10 @@ public class BancoDeDados {
 
     }
 
+    /**
+     * Método que adiciona uma Conta no banco de dados
+     * @param conta - Conta a ser adicionada
+     */
     public void adicionarConta(Conta conta){
         String sql = "INSERT INTO Conta (cpf, usuario, senha, email) VALUES (?, ?, ?, ?)";
 

@@ -13,9 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -112,7 +110,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
 
         else if(e.getActionCommand().equals("FINALIZAR_COMPRA")){
             DecimalFormat df = new DecimalFormat("#.00");
-            float valor_compra = Float.parseFloat(df.format(valor_final - valor_final * desconto).replace(',', '.'));
+            float valor_compra = Float.parseFloat(df.format(valor_final - valor_final * desconto).replace(',', '.')); //valor_compra recebe o valor final com o desconto, formatado para duas casas decimais
             String notaFiscal = panel.getProdutos().getText();
 
             boolean finalizou = false;
@@ -146,6 +144,9 @@ public class ControladorCaixa implements ActionListener, KeyListener{
                 }
             }
 
+            /*
+            Cria arquivo com a nota fiscal da compra
+             */
             try {
                 FileOutputStream nota = new FileOutputStream(cpf + System.currentTimeMillis());
                 nota.write(notaFiscal.getBytes());
@@ -153,11 +154,12 @@ public class ControladorCaixa implements ActionListener, KeyListener{
                 e1.printStackTrace();
             }
 
+            //Laço que diminui a quantidade de produtos no estoque de acordo com a venda
             for(Produto p : produtos){
                 bd.venderProduto(p.getCodigo(), p.getQuantidade());
             }
 
-            this.resetarGUI();
+            this.resetarGUI(); //Zera a GUI para a proxima venda
 
         }
 

@@ -127,6 +127,7 @@ public class MainGUI extends JFrame implements ActionListener{
             this.getContentPane().setVisible(false);
             this.setContentPane(clientesGUI);
             this.getContentPane().setVisible(true);
+            clientesGUI.atualizarTabela();
         }
         
         else if (e.getActionCommand().equals("FUNCIONARIOS")) {
@@ -136,6 +137,7 @@ public class MainGUI extends JFrame implements ActionListener{
             this.getContentPane().setVisible(false);
             this.setContentPane(funcionariosGUI);
             this.getContentPane().setVisible(true);
+            funcionariosGUI.atualizarTabela();
         }
         
         else if (e.getActionCommand().equals("ESTOQUE")) {
@@ -145,6 +147,7 @@ public class MainGUI extends JFrame implements ActionListener{
             this.getContentPane().setVisible(false);
             this.setContentPane(produtosGUI);
             this.getContentPane().setVisible(true);
+            produtosGUI.atualizarTabela();
         }
 
         else if (e.getActionCommand().equals("CONTAS")) {
@@ -154,6 +157,7 @@ public class MainGUI extends JFrame implements ActionListener{
             this.getContentPane().setVisible(false);
             this.setContentPane(contasGUI);
             this.getContentPane().setVisible(true);
+            contasGUI.atualizarTabela();
         }
 
 

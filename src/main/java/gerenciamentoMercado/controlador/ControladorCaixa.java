@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -111,7 +112,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
         else if(e.getActionCommand().equals("FINALIZAR_COMPRA")){
             DecimalFormat df = new DecimalFormat("#.00");
             float valor_compra = Float.parseFloat(df.format(valor_final - valor_final * desconto).replace(',', '.')); //valor_compra recebe o valor final com o desconto, formatado para duas casas decimais
-            String notaFiscal = panel.getProdutos().getText();
+            String notaFiscal = panel.getProdutos().getText() + "Valor total: " + valor_compra + "\n";
 
             boolean finalizou = false;
             while(!finalizou) {
@@ -148,10 +149,15 @@ public class ControladorCaixa implements ActionListener, KeyListener{
             Cria arquivo com a nota fiscal da compra
              */
             try {
-                FileOutputStream nota = new FileOutputStream(cpf + System.currentTimeMillis());
+                File diretorio = new File("log");
+                diretorio.mkdir();
+                diretorio = new File("log/vendas");
+                diretorio.mkdir();
+
+                FileOutputStream nota = new FileOutputStream("./log/vendas/" + cpf + System.currentTimeMillis() + ".txt");
                 nota.write(notaFiscal.getBytes());
             } catch (Exception e1) {
-                e1.printStackTrace();
+                ;
             }
 
             //Laço que diminui a quantidade de produtos no estoque de acordo com a venda
@@ -220,12 +226,15 @@ public class ControladorCaixa implements ActionListener, KeyListener{
         }
 
         else if(e.getActionCommand().equals("FECHAR_CAIXA")){
-            frame.setSize(400, 400);
-            panel.setVisible(false);
 
-            frame.setContentPane(new LoginGUI(frame));
-            frame.setJMenuBar(null);
-            frame.getContentPane().setVisible(true);
+            if (JOptionPane.showConfirmDialog(panel, "Deseja fechar o caixa?") == JOptionPane.OK_OPTION) {
+                frame.setSize(400, 400);
+                panel.setVisible(false);
+
+                frame.setContentPane(new LoginGUI(frame));
+                frame.setJMenuBar(null);
+                frame.getContentPane().setVisible(true);
+            }
         }
     }
 
@@ -297,7 +306,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
         String aux = produtosField.getText();
         String produtoString = prefixo + p.codigo + " - " + p.getDescricao() + ", " + p.getMarca() + " , valor :" +
                 p.getPreco() + " * " + quantidade + " = " + (operacao * p.getPreco() * quantidade) + "\n";
-        produtosField.setText(aux + produtoString); //TODO alterar impressão aki
+        produtosField.setText(aux + produtoString);
     }
 
 }

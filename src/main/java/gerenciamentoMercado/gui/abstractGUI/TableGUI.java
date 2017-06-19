@@ -185,18 +185,22 @@ public abstract class TableGUI extends JPanel{
 
         BufferedImage backgroundImage = null;
         try {
-            backgroundImage = ImageIO.read(new File(".\\images\\background.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
+            ClassLoader classLoader = getClass().getClassLoader();
+            File file = new File(classLoader.getResource("background.jpg").getFile());
+
+            backgroundImage = ImageIO.read(file);
+
+            Rectangle rect  = new Rectangle(0,0, this.getWidth(), this.getHeight());
+
+            TexturePaint p = new TexturePaint(backgroundImage, rect);
+            Graphics2D g2 = (Graphics2D)g;
+
+            g2.setPaint(p);
+            g2.fillRect(0, 0, this.getWidth(), this.getHeight());
         }
-
-        Rectangle rect  = new Rectangle(0,0, this.getWidth(), this.getHeight());
-
-        TexturePaint p = new TexturePaint(backgroundImage, rect);
-        Graphics2D g2 = (Graphics2D)g;
-
-        g2.setPaint(p);
-        g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+        catch (IOException e) {
+        ;
+        }
     }
 
     protected MainGUI getFrame() {

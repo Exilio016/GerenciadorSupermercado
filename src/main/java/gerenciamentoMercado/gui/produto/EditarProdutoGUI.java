@@ -62,7 +62,7 @@ public class EditarProdutoGUI extends InserirGUI{
                 return;
             }
 
-            Produto produto = new Produto(quantidade, valor, "", marca, descricao, codigo);
+            Produto produto = new Produto(quantidade, valor, marca, descricao, codigo);
             frame.getBanco().adicionarProduto(produto);
 
             this.setVisible(false);

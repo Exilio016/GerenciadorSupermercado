@@ -46,7 +46,7 @@ public class BancoDeDados {
         }
 
         try{
-            String sql = "CREATE TABLE Produto (nome VARCHAR(50), descricao VARCHAR(50), marca VARCHAR(50), codigo INT, valorUnitario FLOAT, quantidade INT, primary key (codigo))";
+            String sql = "CREATE TABLE Produto (descricao VARCHAR(50), marca VARCHAR(50), codigo INT, valorUnitario FLOAT, quantidade INT, primary key (codigo))";
 
             stmt = conn.prepareStatement(sql);
             stmt.execute();
@@ -259,17 +259,16 @@ public class BancoDeDados {
 
     public void adicionarProduto(Produto produto){
         if(produto != null){
-            String sql = "INSERT INTO Produto (nome, descricao, marca, codigo, valorUnitario, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Produto (descricao, marca, codigo, valorUnitario, quantidade) VALUES (?, ?, ?, ?, ?)";
 
             try {
                 PreparedStatement stmt = conn.prepareStatement(sql);
 
-                stmt.setString(1, produto.getNome());
-                stmt.setString(2, produto.getDescricao());
-                stmt.setString(3, produto.getMarca());
-                stmt.setInt(4, produto.getCodigo());
-                stmt.setFloat(5, produto.getPreco());
-                stmt.setInt(6, produto.getQuantidade());
+                stmt.setString(1, produto.getDescricao());
+                stmt.setString(2, produto.getMarca());
+                stmt.setInt(3, produto.getCodigo());
+                stmt.setFloat(4, produto.getPreco());
+                stmt.setInt(5, produto.getQuantidade());
 
                 stmt.execute();
                 stmt.close();
@@ -290,13 +289,12 @@ public class BancoDeDados {
             ResultSet res = stmt.executeQuery();
 
             if(res.next()){
-                String nome = res.getString(1);
-                String descricao = res.getString(2);
-                String marca = res.getString(3);
-                float valor = res.getFloat(5);
-                int quantidade = res.getInt(6);
+                String descricao = res.getString(1);
+                String marca = res.getString(2);
+                float valor = res.getFloat(4);
+                int quantidade = res.getInt(5);
 
-                produto = new Produto(quantidade, valor, nome, marca, descricao, codigo);
+                produto = new Produto(quantidade, valor, marca, descricao, codigo);
             }
 
             stmt.close();
@@ -349,14 +347,13 @@ public class BancoDeDados {
 
             ResultSet res = stmt.executeQuery();
             while(res.next()) {
-                String nome = res.getString(1);
-                String descricao = res.getString(2);
-                String marca = res.getString(3);
-                int codigo = res.getInt(4);
-                float valor = res.getFloat(5);
-                int quantidade = res.getInt(6);
+                String descricao = res.getString(1);
+                String marca = res.getString(2);
+                int codigo = res.getInt(3);
+                float valor = res.getFloat(4);
+                int quantidade = res.getInt(5);
 
-                produtos.add(new Produto(quantidade, valor, nome, marca, descricao, codigo));
+                produtos.add(new Produto(quantidade, valor, marca, descricao, codigo));
             }
 
             stmt.close();

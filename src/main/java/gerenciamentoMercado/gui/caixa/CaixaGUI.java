@@ -93,7 +93,10 @@ public class CaixaGUI extends JPanel{
 		this.add(borda2, BorderLayout.WEST);
 
 		try {
-			 backgroundImage = ImageIO.read(new File(".\\images\\background.jpg"));
+			ClassLoader classLoader = getClass().getClassLoader();
+			File file = new File(classLoader.getResource("background.jpg").getFile());
+
+			backgroundImage = ImageIO.read(file);
 		} catch (IOException ex) {
 			ex.printStackTrace(System.err);
 		}

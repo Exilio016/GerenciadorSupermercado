@@ -3,12 +3,11 @@ package gerenciamentoMercado.produto;
 public class Produto {
 	public int quantidade, codigo;
 	public float preco;
-	public String nome, marca, descricao;
+	public String marca, descricao;
 
-	public Produto(int quantidade, float preco, String nome, String marca, String descricao, int codigo) {
+	public Produto(int quantidade, float preco, String marca, String descricao, int codigo) {
 		this.quantidade = quantidade;
 		this.preco = preco;
-		this.nome = nome;
 		this.marca = marca;
 		this.descricao = descricao;
 		this.codigo = codigo;
@@ -18,24 +17,12 @@ public class Produto {
 		this.quantidade = quantidade;
 	}
 
-	public void vendeProduto(int quantidade) {
-		this.quantidade -= quantidade;
-	}
-
-	public void restocaProduto(int quantidade) {
-		this.quantidade += quantidade;
-	}
-
 	public int getQuantidade() {
 		return quantidade;
 	}
 
 	public float getPreco() {
 		return preco;
-	}
-
-	public String getNome() {
-		return nome;
 	}
 
 	public String getMarca() {

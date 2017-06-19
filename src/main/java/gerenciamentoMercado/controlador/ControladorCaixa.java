@@ -13,8 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.*;
 
 /**
  * Classe que controla o caixa, como listener dos eventos de CaixaGUI
@@ -108,10 +111,52 @@ public class ControladorCaixa implements ActionListener, KeyListener{
         }
 
         else if(e.getActionCommand().equals("FINALIZAR_COMPRA")){
-            float valor_compra = valor_final - valor_final * desconto;
+            DecimalFormat df = new DecimalFormat("#.00");
+            float valor_compra = Float.parseFloat(df.format(valor_final - valor_final * desconto).replace(',', '.'));
             String notaFiscal = panel.getProdutos().getText();
 
-            //TODO ir para a GUI de finalizar compra
+            boolean finalizou = false;
+            while(!finalizou) {
+                Object[] metodo = {"Dinheiro", "Cheque"};
+                String metodoEscolido = (String) JOptionPane.showInputDialog(panel, "Método de pagamento? \nValor a ser pago: " + valor_compra, "Pagamento", JOptionPane.PLAIN_MESSAGE, null, metodo, "Dinheiro");
+
+                boolean continuar = false;
+                float valor_recebido = 0;
+
+                while (!continuar) {
+                    try {
+                        valor_recebido = Float.parseFloat((String) JOptionPane.showInputDialog(panel, "Valor Total: " + valor_compra +"\nValor recebido: "));
+                        continuar = true;
+                    } catch (Exception ex) {
+                        continuar = false;
+                    }
+                }
+
+                notaFiscal += metodoEscolido + ": " + valor_recebido + '\n';
+
+                finalizou = true;
+                if(valor_recebido > valor_compra) {
+                    float troco = Float.parseFloat(df.format(valor_recebido - valor_compra).replace(',', '.'));
+                    JOptionPane.showMessageDialog(panel, "Troco: " + troco);
+                    notaFiscal += "Troco: " + troco + "\n";
+                }
+                else if(valor_recebido < valor_compra) {
+                    valor_compra -= valor_recebido;
+                    finalizou = false;
+                }
+            }
+
+            try {
+                FileOutputStream nota = new FileOutputStream(cpf + System.currentTimeMillis());
+                nota.write(notaFiscal.getBytes());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            for(Produto p : produtos){
+                bd.venderProduto(p.getCodigo(), p.getQuantidade());
+            }
+
             this.resetarGUI();
 
         }

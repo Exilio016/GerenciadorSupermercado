@@ -308,11 +308,12 @@ public class BancoDeDados {
     }
 
     public void venderProduto(int codigo, int quantidade){
+        Produto p = this.mostrarProduto(codigo);
         String sql = "UPDATE Produto SET quantidade = ? WHERE codigo = ?";
 
         try{
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, quantidade);
+            stmt.setInt(1, p.getQuantidade() - quantidade);
             stmt.setInt(2, codigo);
 
             stmt.execute();

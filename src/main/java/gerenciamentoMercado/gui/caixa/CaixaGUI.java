@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -93,8 +94,7 @@ public class CaixaGUI extends JPanel{
 		this.add(borda2, BorderLayout.WEST);
 
 		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-			File file = new File(classLoader.getResource("background.jpg").getFile());
+			InputStream file = getClass().getResourceAsStream("/background.jpg");
 
 			backgroundImage = ImageIO.read(file);
 		} catch (IOException ex) {

@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
 
 /**
@@ -185,9 +186,7 @@ public abstract class TableGUI extends JPanel{
 
         BufferedImage backgroundImage = null;
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("background.jpg").getFile());
-
+            InputStream file = getClass().getResourceAsStream("/background.jpg");
             backgroundImage = ImageIO.read(file);
 
             Rectangle rect  = new Rectangle(0,0, this.getWidth(), this.getHeight());
@@ -198,7 +197,7 @@ public abstract class TableGUI extends JPanel{
             g2.setPaint(p);
             g2.fillRect(0, 0, this.getWidth(), this.getHeight());
         }
-        catch (IOException e) {
+        catch (Exception e) {
         ;
         }
     }

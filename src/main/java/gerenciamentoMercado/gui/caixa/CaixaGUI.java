@@ -7,7 +7,6 @@ import gerenciamentoMercado.gui.action.CaixaGUIActions;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -55,18 +54,6 @@ public class CaixaGUI extends JPanel{
 
 	public JTextArea getProdutos() {
 		return produtos;
-	}
-
-	public JButton getFinalizar() {
-		return finalizar;
-	}
-
-	public JButton getCancelar() {
-		return cancelar;
-	}
-
-	public JButton getFechar() {
-		return fechar;
 	}
 
 	/**

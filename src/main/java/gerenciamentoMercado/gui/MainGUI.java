@@ -6,11 +6,15 @@ import gerenciamentoMercado.gui.cliente.ClientesGUI;
 import gerenciamentoMercado.gui.contas.ContasGUI;
 import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 import gerenciamentoMercado.gui.produto.ProdutosGUI;
+import jdk.internal.util.xml.impl.Input;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 
 /**
@@ -38,6 +42,13 @@ public class MainGUI extends JFrame implements ActionListener{
         this.setAlwaysOnTop(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.bd = bd;
+
+        InputStream inputStream = getClass().getResourceAsStream("/icone.jpg");
+        try {
+            this.setIconImage(ImageIO.read(inputStream));
+        } catch (IOException e) {
+            ;
+        }
 
         loginGUI = new LoginGUI(this);
         this.setContentPane(loginGUI);

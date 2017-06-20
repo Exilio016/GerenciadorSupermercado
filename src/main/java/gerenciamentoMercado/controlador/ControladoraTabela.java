@@ -51,10 +51,10 @@ public class ControladoraTabela implements ActionListener{
                 String nome = (String) panel.getTabela().getValueAt(linha, COLUNA_NOME);
 
                 if(panel instanceof ClientesGUI){
-                	if (JOptionPane.showConfirmDialog(panel, "Deseja remover o cliente?\nNome: " + nome + "\nCPF: " + cpf + "\n") == JOptionPane.OK_OPTION)
+                	if (JOptionPane.showConfirmDialog(panel, "Deseja remover o cliente?\nNome: " + nome + "\nCPF: " + cpf + "\n", "Remover Cliente", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
                 		bd.removerCliente(cpf);
                 }else{
-                	if (JOptionPane.showConfirmDialog(panel, "Deseja remover o funcionario?\nNome: " + nome + "\nCPF: " + cpf + "\n") == JOptionPane.OK_OPTION)
+                	if (JOptionPane.showConfirmDialog(panel, "Deseja remover o funcionário?\nNome: " + nome + "\nCPF: " + cpf + "\n", "Remover Funcionário", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
                         bd.removerFuncionario(cpf);
                 }
                     panel.atualizarTabela();
@@ -65,9 +65,10 @@ public class ControladoraTabela implements ActionListener{
                     String desc = (String) panel.getTabela().getValueAt(linha, COLUNA_DESC);
                     String marca = (String) panel.getTabela().getValueAt(linha, COLUNA_MARCA);
 
-                    if(JOptionPane.showConfirmDialog(panel, "Deseja remover o produto?\nCodigo: " + codigo + "\nDescrição: " + desc + "Marca: \n" + marca + "\n") == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(panel, "Deseja remover o produto?\nCodigo: " + codigo + "\nDescrição: " + desc + "\nMarca: " + marca + "\n", "Remover Produto", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                         bd.removerProduto(codigo);
                         panel.atualizarTabela();
+                        
                     }
                 }catch (Exception ex){
                     ex.printStackTrace();
@@ -78,7 +79,7 @@ public class ControladoraTabela implements ActionListener{
             else if(panel instanceof  ContasGUI && linha > 0){
                 String usuario = (String) panel.getTabela().getValueAt(linha, COLUNA_USUARIO);
 
-                if(JOptionPane.showConfirmDialog(panel, "Deseja remover o usuário: " + usuario) == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(panel, "Deseja remover o usuário: " + usuario, "Remover Usuário", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     bd.removerConta(usuario);
                     panel.atualizarTabela();
                 }

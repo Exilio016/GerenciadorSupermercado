@@ -68,8 +68,13 @@ public class InserirFuncionariosGUI extends InserirGUI {
 
             int cargo = Funcionario.parseCargo(cargoStr);
 
-            Funcionario funcionario = new Funcionario(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, nome, salario, cargo);
-            frame.getBanco().adicionarFuncionario(funcionario);
+            if(frame.getBanco().procurarFuncionario(cpf) == null){
+	            Funcionario funcionario = new Funcionario(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, nome, salario, cargo);
+	            frame.getBanco().adicionarFuncionario(funcionario);
+            }else{
+            	JOptionPane.showMessageDialog(this, "CPF já cadastrado no sistema!");
+            	return;
+            }
 
             tableGUI.atualizarTabela();
 

@@ -52,9 +52,14 @@ public class InserirProdutoGUI extends InserirGUI{
                 JOptionPane.showMessageDialog(this, "'Valor unitário' deve ser um número real!\nAtenção: não use vírgula(,) use ponto(.)");
                 return;
             }
-
-            Produto produto = new Produto(quantidade, valor, marca, descricao, codigo);
-            frame.getBanco().adicionarProduto(produto);
+            
+            if(frame.getBanco().procurarProduto(codigo) == null){            
+	            Produto produto = new Produto(quantidade, valor, marca, descricao, codigo);
+	            frame.getBanco().adicionarProduto(produto);
+            }else{
+            	JOptionPane.showMessageDialog(this, "Código já cadastrado no sistema!");
+            	return;
+            }
 
             this.setVisible(false);
             frame.setContentPane(tableGUI);

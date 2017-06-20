@@ -1,8 +1,5 @@
 package gerenciamentoMercado.pessoa;
 
-/**
- * Created by nding on 15/06/2017.
- */
 public class Conta {
     private String cpf;
     private String usuario;

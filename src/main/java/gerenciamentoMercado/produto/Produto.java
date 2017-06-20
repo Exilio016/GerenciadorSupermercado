@@ -1,9 +1,9 @@
 package gerenciamentoMercado.produto;
 
 public class Produto {
-	public int quantidade, codigo;
-	public float preco;
-	public String marca, descricao;
+	private int quantidade, codigo;
+	private float preco;
+	private String marca, descricao;
 
 	public Produto(int quantidade, float preco, String marca, String descricao, int codigo) {
 		this.quantidade = quantidade;

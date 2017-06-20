@@ -304,7 +304,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
 
         JTextArea produtosField = panel.getProdutos();
         String aux = produtosField.getText();
-        String produtoString = prefixo + p.codigo + " - " + p.getDescricao() + ", " + p.getMarca() + " , valor :" +
+        String produtoString = prefixo + p.getCodigo() + " - " + p.getDescricao() + ", " + p.getMarca() + " , valor :" +
                 p.getPreco() + " * " + quantidade + " = " + (operacao * p.getPreco() * quantidade) + "\n";
         produtosField.setText(aux + produtoString);
     }

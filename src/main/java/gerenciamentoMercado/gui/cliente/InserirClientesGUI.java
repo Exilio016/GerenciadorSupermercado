@@ -56,8 +56,13 @@ public class InserirClientesGUI extends InserirGUI{
                 return;
             }
 
-            Cliente cliente = new Cliente(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, cartao, nome);
-            frame.getBanco().adicionarCliente(cliente);
+            if(frame.getBanco().procurarCliente(cpf) == null){
+	            Cliente cliente = new Cliente(estado, cidade, bairro, rua, numero, complemento, cep, cpf, rg, telefone, celular, cartao, nome);
+	            frame.getBanco().adicionarCliente(cliente);
+            }else{
+            	JOptionPane.showMessageDialog(this, "CPF já cadastrado no sistema!");
+            	return;
+            }
 
             tableGUI.atualizarTabela();
 

@@ -85,7 +85,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
                 quantidade = 0;
             }
 
-            Produto p = bd.mostrarProduto(codigo);
+            Produto p = bd.procurarProduto(codigo);
             if(p != null && quantidade > 0) {
                 p.setQuantidade(quantidade);
                 valor_final += p.getPreco() * quantidade;
@@ -258,7 +258,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
             codigo = -1; //Se a conversão não foi possivel, código recebe um valor de produto inválido
         }
 
-        Produto p = bd.mostrarProduto(codigo); //Busca o código no banco
+        Produto p = bd.procurarProduto(codigo); //Busca o código no banco
         if(p != null){
             Float valor = p.getPreco();
             panel.getValorProduto().setText(valor.toString()); //Atualiza valor unitario

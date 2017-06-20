@@ -107,11 +107,10 @@ public class BancoDeDados {
 
             stmt.close();
 
-
-
         } catch (SQLException se) {
             se.printStackTrace();
         }
+        
         return ret;
     }
 
@@ -279,7 +278,7 @@ public class BancoDeDados {
         }
     }
 
-    public Produto mostrarProduto(int codigo){
+    public Produto procurarProduto(int codigo){
         String sql = "SELECT * FROM Produto WHERE codigo= ?";
         Produto produto = null;
         try{
@@ -306,7 +305,7 @@ public class BancoDeDados {
     }
 
     public void venderProduto(int codigo, int quantidade){
-        Produto p = this.mostrarProduto(codigo);
+        Produto p = this.procurarProduto(codigo);
         String sql = "UPDATE Produto SET quantidade = ? WHERE codigo = ?";
 
         try{

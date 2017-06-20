@@ -110,7 +110,7 @@ public class ControladoraTabela implements ActionListener{
             if(panel instanceof ProdutosGUI){
                 try {
                     int codigo = Integer.parseInt(campo);
-                    resultado.add(bd.mostrarProduto(codigo));
+                    resultado.add(bd.procurarProduto(codigo));
                 }catch (Exception ex){
 
                 }

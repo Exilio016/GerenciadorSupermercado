@@ -4,6 +4,8 @@ import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.abstractGUI.InserirGUI;
 import gerenciamentoMercado.gui.produto.ProdutosGUI;
 import gerenciamentoMercado.pessoa.Conta;
+import gerenciamentoMercado.pessoa.Funcionario;
+import gerenciamentoMercado.pessoa.Pessoa;
 import gerenciamentoMercado.produto.Produto;
 
 import javax.swing.*;
@@ -21,7 +23,7 @@ public class EditarContasGUI extends InserirGUI{
             campos.get(i).setText(valor);
         }
 
-        campos.get(0).setEditable(false);
+        campos.get(1).setEditable(false);
         campos.get(2).setText("");
 
         inserir.setText("Editar");
@@ -38,10 +40,28 @@ public class EditarContasGUI extends InserirGUI{
             String senha = campos.get(2).getText();
             String email = campos.get(3).getText();
 
+            if (!Pessoa.verificaCPF(cpf)) {
+                JOptionPane.showMessageDialog(this, "CPF inválido!");
+                return;
+            } else {
+                String[] split = cpf.split("\\D");
+                cpf = "";
+                for (String s : split) {
+                    cpf += s;
+                }
+                Funcionario f = frame.getBanco().procurarFuncionario(cpf);
+                if(f == null || f.getCargo() < 1){
+                    JOptionPane.showMessageDialog(this, "Cargo inváido para criação de conta!");
+                    return;
+                }
+            }
+
             if(usuario.isEmpty() || senha.isEmpty()){
                 JOptionPane.showMessageDialog(this,"Os campos 'Usuário' e 'Senha' não podem estar em branco");
                 return;
             }
+
+            frame.getBanco().removerConta(usuario);
 
             Conta c = new Conta(cpf, usuario, senha, email);
             frame.getBanco().adicionarConta(c);

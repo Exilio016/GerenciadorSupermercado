@@ -33,6 +33,9 @@ public class ControladoraTabela implements ActionListener{
     private static final int COLUNA_CPF = 1;
     private static final int COLUNA_CODIGO = 2;
     private static final int COLUNA_USUARIO = 1;
+    private static final int COLUNA_NOME = 0;
+    private static final int COLUNA_DESC = 0;
+    private static final int COLUNA_MARCA = 1;
 
     public ControladoraTabela(MainGUI frame, TableGUI panel){
         this.frame = frame;
@@ -45,21 +48,24 @@ public class ControladoraTabela implements ActionListener{
             int linha = panel.getTabela().getSelectedRow();
             if((panel instanceof ClientesGUI || panel instanceof FuncionariosGUI)&& linha >= 0) {
                 String cpf = (String) panel.getTabela().getValueAt(linha, COLUNA_CPF);
+                String nome = (String) panel.getTabela().getValueAt(linha, COLUNA_NOME);
 
-                if (JOptionPane.showConfirmDialog(panel, "Deseja remover o cliente: " + cpf + "?\n") == JOptionPane.OK_OPTION) {
-                    if(panel instanceof ClientesGUI)
-                        bd.removerCliente(cpf);
-                    else
+                if(panel instanceof ClientesGUI){
+                	if (JOptionPane.showConfirmDialog(panel, "Deseja remover o cliente?\nNome: " + nome + "\nCPF: " + cpf + "\n") == JOptionPane.OK_OPTION)
+                		bd.removerCliente(cpf);
+                }else{
+                	if (JOptionPane.showConfirmDialog(panel, "Deseja remover o funcionario?\nNome: " + nome + "\nCPF: " + cpf + "\n") == JOptionPane.OK_OPTION)
                         bd.removerFuncionario(cpf);
-
-                    panel.atualizarTabela();
                 }
+                    panel.atualizarTabela();
             }
             else if(panel instanceof ProdutosGUI && linha >= 0){
                 try{
                     int codigo = (Integer) panel.getTabela().getValueAt(linha, COLUNA_CODIGO);
+                    String desc = (String) panel.getTabela().getValueAt(linha, COLUNA_DESC);
+                    String marca = (String) panel.getTabela().getValueAt(linha, COLUNA_MARCA);
 
-                    if(JOptionPane.showConfirmDialog(panel, "Deseja remover o produto: " + codigo + "?\n") == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(panel, "Deseja remover o produto?\nCodigo: " + codigo + "\nDescrição: " + desc + "Marca: \n" + marca + "\n") == JOptionPane.OK_OPTION){
                         bd.removerProduto(codigo);
                         panel.atualizarTabela();
                     }

@@ -154,7 +154,7 @@ public class ControladorCaixa implements ActionListener, KeyListener{
                 diretorio = new File("log/vendas");
                 diretorio.mkdir();
 
-                FileOutputStream nota = new FileOutputStream("./log/vendas/" + cpf + System.currentTimeMillis() + ".txt");
+                FileOutputStream nota = new FileOutputStream("./log/vendas/" + cpf + " - " +  System.currentTimeMillis() + ".txt");
                 nota.write(notaFiscal.getBytes());
             } catch (Exception e1) {
                 ;

@@ -6,7 +6,6 @@ import gerenciamentoMercado.gui.cliente.ClientesGUI;
 import gerenciamentoMercado.gui.contas.ContasGUI;
 import gerenciamentoMercado.gui.funcionario.FuncionariosGUI;
 import gerenciamentoMercado.gui.produto.ProdutosGUI;
-import jdk.internal.util.xml.impl.Input;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

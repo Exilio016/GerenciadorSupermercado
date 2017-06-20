@@ -186,7 +186,7 @@ public abstract class TableGUI extends JPanel{
 
         BufferedImage backgroundImage = null;
         try {
-            InputStream file = getClass().getResourceAsStream("/background.jpg");
+            InputStream file = getClass().getResourceAsStream("/background.png");
             backgroundImage = ImageIO.read(file);
 
             Rectangle rect  = new Rectangle(0,0, this.getWidth(), this.getHeight());

@@ -4,14 +4,14 @@ import gerenciamentoMercado.controlador.ControladorCaixa;
 import gerenciamentoMercado.gui.MainGUI;
 import gerenciamentoMercado.gui.action.CaixaGUIActions;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 /**
  * Classe que representa a aba do caixa do supermercado
@@ -81,7 +81,7 @@ public class CaixaGUI extends JPanel{
 		this.add(borda2, BorderLayout.WEST);
 
 		try {
-			InputStream file = getClass().getResourceAsStream("/background.jpg");
+			InputStream file = getClass().getResourceAsStream("/background.png");
 
 			backgroundImage = ImageIO.read(file);
 		} catch (IOException ex) {
